@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>プライバシーポリシー | AV女優ナビ</title>
   <meta name="robots" content="noindex">
+  <meta property="og:title" content="プライバシーポリシー | AV女優ナビ">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://av-actress-navi.pages.dev/privacy.html">
+  <meta property="og:site_name" content="AV女優ナビ">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,8 +21,9 @@
         <span class="tagline">おすすめ女優・無料動画・FANZAランキング</span>
       </div>
     </a>
+    <button class="nav-toggle" id="navToggle" aria-label="メニューを開く">☰</button>
     <nav>
-      <ul class="site-nav">
+      <ul class="site-nav" id="siteNav">
         <li><a href="index.html">ホーム</a></li>
         <li><a href="ranking-top10.html">ランキング</a></li>
         <li><a href="contact.html">お問い合わせ</a></li>
@@ -60,5 +65,16 @@
   <p>&copy; 2026 AV女優ナビ | <a href="privacy.html">プライバシーポリシー</a> | <a href="contact.html">お問い合わせ</a></p>
 </footer>
 
+
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const siteNav = document.getElementById('siteNav');
+  if (navToggle) {
+    navToggle.addEventListener('click', () => {
+      siteNav.classList.toggle('open');
+      navToggle.textContent = siteNav.classList.contains('open') ? '✕' : '☰';
+    });
+  }
+</script>
 </body>
 </html>

@@ -7,6 +7,16 @@
   <meta name="description" content="AV女優のプロフィール・無料サンプル動画・おすすめ作品をまとめて紹介。FANZAで楽しめる人気女優ランキングや新人情報も随時更新中。">
   <meta name="robots" content="noindex, nofollow">
   <link rel="canonical" href="https://av-actress-navi.pages.dev/">
+  <!-- OGP -->
+  <meta property="og:title" content="AV女優ナビ | おすすめAV女優・無料動画・FANZAランキング2026">
+  <meta property="og:description" content="AV女優のプロフィール・無料サンプル動画・おすすめ作品をまとめて紹介。FANZAで楽しめる人気女優ランキングや新人情報も随時更新中。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://av-actress-navi.pages.dev/">
+  <meta property="og:site_name" content="AV女優ナビ">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="AV女優ナビ | おすすめAV女優・無料動画・FANZAランキング2026">
+  <meta name="twitter:description" content="おすすめ女優・無料サンプル動画・FANZAランキング情報を毎日更新。">
   <link rel="stylesheet" href="style.css">
   <script type="application/ld+json">
   {
@@ -41,8 +51,9 @@
         <span class="tagline">おすすめ女優・無料動画・FANZAランキング</span>
       </div>
     </a>
+    <button class="nav-toggle" id="navToggle" aria-label="メニューを開く">☰</button>
     <nav>
-      <ul class="site-nav">
+      <ul class="site-nav" id="siteNav">
         <li><a href="index.html">ホーム</a></li>
         <li><a href="ranking-top10.html">ランキング</a></li>
         <li><a href="privacy.html">プライバシー</a></li>
@@ -111,19 +122,25 @@
       <div class="widget-title">カテゴリ</div>
       <div class="tag-cloud" style="padding:14px;">
         <a href="ranking-top10.html">ランキング</a>
-        <a href="#">スレンダー</a>
-        <a href="#">巨乳</a>
-        <a href="#">新人</a>
-        <a href="#">人気女優</a>
-        <a href="#">FANZA</a>
-        <a href="#">無料動画</a>
-        <a href="#">サンプル</a>
+        <a href="ranking-top10.html">スレンダー</a>
+        <a href="ranking-top10.html">巨乳</a>
+        <a href="ranking-top10.html">新人</a>
+        <a href="ranking-top10.html">人気女優</a>
+        <a href="ranking-top10.html">FANZA</a>
+        <a href="ranking-top10.html">無料動画</a>
+        <a href="ranking-top10.html">サンプル</a>
       </div>
     </div>
 
   </aside>
 
 </div>
+
+<!-- ======= Mobile CTA Bar ======= -->
+<a href="YOUR_FANZA_AFFILIATE_LINK" class="mobile-cta-bar" target="_blank" rel="noopener sponsored">▶ FANZAで無料登録する</a>
+
+<!-- ======= Back to Top ======= -->
+<button class="back-to-top" id="backToTop" aria-label="ページ上部へ戻る">▲</button>
 
 <!-- ======= Footer ======= -->
 <footer class="site-footer">
@@ -143,6 +160,23 @@
   if (sessionStorage.getItem('ageVerified') === '1') {
     document.getElementById('ageModal').style.display = 'none';
   }
+
+  // ハンバーガーメニュー
+  const navToggle = document.getElementById('navToggle');
+  const siteNav = document.getElementById('siteNav');
+  if (navToggle) {
+    navToggle.addEventListener('click', () => {
+      siteNav.classList.toggle('open');
+      navToggle.textContent = siteNav.classList.contains('open') ? '✕' : '☰';
+    });
+  }
+
+  // ページトップへ戻る
+  const btn = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > 200);
+  });
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 </script>
 
 </body>
