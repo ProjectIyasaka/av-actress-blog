@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>お問い合わせ | AV女優ナビ</title>
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" style="text-decoration:none;">
+      <div class="site-logo">
+        <span class="name">AV女優<span>ナビ</span></span>
+        <span class="tagline">おすすめ女優・無料動画・FANZAランキング</span>
+      </div>
+    </a>
+    <nav>
+      <ul class="site-nav">
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="ranking-top10.html">ランキング</a></li>
+        <li><a href="privacy.html">プライバシー</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div style="max-width:600px; margin:40px auto; padding:0 20px;">
+  <h1 style="font-size:24px; color:#fff; font-weight:900; margin-bottom:24px; border-left:4px solid #e91e8c; padding-left:12px;">お問い合わせ</h1>
+
+  <div id="formArea">
+    <form onsubmit="handleSubmit(event)" style="display:flex; flex-direction:column; gap:16px;">
+      <div>
+        <label style="display:block; font-size:13px; color:#888; margin-bottom:6px;">お名前</label>
+        <input type="text" required placeholder="山田 太郎" style="width:100%; padding:10px 14px; background:#1a1a1a; border:1px solid #2e2e2e; border-radius:8px; color:#e8e8e8; font-size:14px;">
+      </div>
+      <div>
+        <label style="display:block; font-size:13px; color:#888; margin-bottom:6px;">メールアドレス</label>
+        <input type="email" required placeholder="example@email.com" style="width:100%; padding:10px 14px; background:#1a1a1a; border:1px solid #2e2e2e; border-radius:8px; color:#e8e8e8; font-size:14px;">
+      </div>
+      <div>
+        <label style="display:block; font-size:13px; color:#888; margin-bottom:6px;">お問い合わせ内容</label>
+        <textarea required rows="6" placeholder="お問い合わせ内容をご記入ください" style="width:100%; padding:10px 14px; background:#1a1a1a; border:1px solid #2e2e2e; border-radius:8px; color:#e8e8e8; font-size:14px; resize:vertical;"></textarea>
+      </div>
+      <button type="submit" style="background:#e91e8c; color:#fff; border:none; border-radius:8px; padding:13px 24px; font-size:15px; font-weight:700; cursor:pointer;">送信する</button>
+    </form>
+  </div>
+
+  <div id="successMsg" style="display:none; background:#1a1a1a; border:1px solid #e91e8c; border-radius:10px; padding:32px; text-align:center;">
+    <p style="font-size:32px; margin-bottom:12px;">✅</p>
+    <p style="font-size:16px; font-weight:700; color:#fff; margin-bottom:8px;">送信完了しました</p>
+    <p style="font-size:13px; color:#888;">お問い合わせありがとうございます。内容を確認のうえ、折り返しご連絡いたします。</p>
+    <a href="index.html" style="display:inline-block; margin-top:20px; background:#e91e8c; color:#fff; padding:10px 24px; border-radius:8px; font-size:14px; font-weight:700;">トップページへ戻る</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <p>&copy; 2026 AV女優ナビ | <a href="privacy.html">プライバシーポリシー</a> | <a href="contact.html">お問い合わせ</a></p>
+</footer>
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  document.getElementById('formArea').style.display = 'none';
+  document.getElementById('successMsg').style.display = 'block';
+}
+</script>
+
+</body>
+</html>
