@@ -1,0 +1,4 @@
+# ジャンル一覧（FANZA videoa floor）
+# genre_id は GenreSearch API で取得した DMM 公式 ID を使う。
+# 初回は空のままでOK。Phase1 後半でジャンル別ページを追加する際に埋める。
+genres: []

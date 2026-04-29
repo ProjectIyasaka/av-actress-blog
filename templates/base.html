@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}AV女優ナビ{% endblock %}</title>
+  <meta name="description" content="{% block description %}AV女優のプロフィール・無料サンプル動画・おすすめ作品をまとめて紹介。{% endblock %}">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="{{ canonical_url }}">
+  <meta property="og:title" content="{{ self.title() }}">
+  <meta property="og:description" content="{{ self.description() }}">
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:site_name" content="AV女優ナビ">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="/style.css">
+  {% block head_extra %}{% endblock %}
+</head>
+<body>
+
+<div class="age-modal" id="ageModal">
+  <div class="age-modal-box">
+    <div style="font-size:48px; margin-bottom:12px;">🔞</div>
+    <h2>年齢確認</h2>
+    <p>このサイトは<strong style="color:#e91e8c;">18歳以上</strong>を対象とした<br>成人向けコンテンツを含みます。<br><br>18歳以上の方のみ入場できます。</p>
+    <button class="age-btn-yes" onclick="enterSite()">✅ 18歳以上です・入場する</button>
+    <button class="age-btn-no" onclick="leaveSite()">未成年・退場する</button>
+    <p style="font-size:10px; margin-top:16px; color:#555;">※ 本サイトはアフィリエイト広告を含みます</p>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" style="text-decoration:none;">
+      <div class="site-logo">
+        <span class="name">AV女優<span>ナビ</span></span>
+        <span class="tagline">おすすめ女優・無料動画・FANZAランキング</span>
+      </div>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="メニューを開く">☰</button>
+    <nav>
+      <ul class="site-nav" id="siteNav">
+        <li><a href="/">ホーム</a></li>
+        <li><a href="/ranking-top10.html">ランキング</a></li>
+        <li><a href="/privacy.html">プライバシー</a></li>
+        <li><a href="/contact.html">お問い合わせ</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+{% block hero %}{% endblock %}
+
+{% block content %}{% endblock %}
+
+<a href="/" class="mobile-cta-bar">▶ AV女優ナビ トップへ</a>
+
+<button class="back-to-top" id="backToTop" aria-label="ページ上部へ戻る">▲</button>
+
+<footer class="site-footer">
+  <p>&copy; 2026 AV女優ナビ | <a href="/privacy.html">プライバシーポリシー</a> | <a href="/contact.html">お問い合わせ</a></p>
+  <p style="margin-top:6px;">※本サイトは18歳以上を対象とした成人向けコンテンツを含みます。18歳未満の方のアクセスはお断りします。</p>
+  <p style="margin-top:4px;">※本サイトはFANZAアフィリエイトプログラムを利用しています。</p>
+  <p style="margin-top:4px; font-size:10px; opacity:.6;">Powered by <a href="https://affiliate.dmm.com/api/" target="_blank" rel="noopener">DMM Web Service</a></p>
+</footer>
+
+<script>
+  function enterSite() {
+    document.getElementById('ageModal').style.display = 'none';
+    sessionStorage.setItem('ageVerified', '1');
+  }
+  function leaveSite() { window.location.href = 'https://www.google.com/'; }
+  if (sessionStorage.getItem('ageVerified') === '1') {
+    document.getElementById('ageModal').style.display = 'none';
+  }
+  const navToggle = document.getElementById('navToggle');
+  const siteNav = document.getElementById('siteNav');
+  if (navToggle) {
+    navToggle.addEventListener('click', () => {
+      siteNav.classList.toggle('open');
+      navToggle.textContent = siteNav.classList.contains('open') ? '✕' : '☰';
+    });
+  }
+  const btn = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > 200);
+  });
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+
+</body>
+</html>

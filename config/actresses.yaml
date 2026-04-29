@@ -1,0 +1,14 @@
+# 生成対象の女優IDリスト（真実の唯一情報源）
+# 月次で見直し、コミット履歴で変更を追跡する。
+# 初回ブートストラップは `python scripts/generate.py --bootstrap-actresses N`
+actresses:
+- id: '1099472'
+  note: 瀬戸環奈
+- id: '1106862'
+  note: 福田ゆあ
+- id: '1044864'
+  note: 河北彩伽（河北彩花）
+- id: '1012844'
+  note: 紗倉まな
+- id: '1107481'
+  note: 井上もも

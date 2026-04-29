@@ -1,0 +1,63 @@
+{
+  "generated_at": "2026-04-28 23:51:13 +0900",
+  "last_successful_run": "2026-04-28 23:51:13 +0900",
+  "consecutive_failures": 0,
+  "stats": {
+    "total_actress_pages": 5,
+    "skipped_actresses": [],
+    "ranking_items": 10
+  },
+  "actress_pages": [
+    {
+      "id": "1099472",
+      "name": "瀬戸環奈",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1099472.html",
+      "hash": "9c30ffef8d1667bb",
+      "works_count": 6
+    },
+    {
+      "id": "1106862",
+      "name": "福田ゆあ",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1106862.html",
+      "hash": "faf87788ef582e40",
+      "works_count": 6
+    },
+    {
+      "id": "1044864",
+      "name": "河北彩伽（河北彩花）",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1044864.html",
+      "hash": "83888e80fbe96565",
+      "works_count": 6
+    },
+    {
+      "id": "1012844",
+      "name": "紗倉まな",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1012844.html",
+      "hash": "5ea95e88ae85b321",
+      "works_count": 6
+    },
+    {
+      "id": "1107481",
+      "name": "井上もも",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1107481.html",
+      "hash": "ab80ea6a6bd7c100",
+      "works_count": 6
+    }
+  ],
+  "ranking": {
+    "status": "ok",
+    "url": "https://av-actress-navi.pages.dev/ranking-top10.html",
+    "hash": "89b22212cd6284d2",
+    "items_count": 10
+  },
+  "index": {
+    "status": "ok",
+    "url": "https://av-actress-navi.pages.dev/"
+  },
+  "generator_version": "0.1.0"
+}
