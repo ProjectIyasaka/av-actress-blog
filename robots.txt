@@ -1,6 +1,9 @@
 User-agent: *
-Disallow: /privacy.html
-Disallow: /contact.html
 Allow: /
+Allow: /actress/
+Allow: /genre/
+Disallow: /tmp/
+Disallow: /data/
+Disallow: /logs/
 
 Sitemap: https://av-actress-navi.pages.dev/sitemap.xml
