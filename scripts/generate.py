@@ -150,7 +150,7 @@ def generate_genre_page(
         article="genre",
         article_id=entry.genre_id,
         sort="rank",
-        hits=12,
+        hits=20,
     )
     if len(works) < 3:
         logger.warning("genre %s (%s): only %d works, skip", entry.genre_id, entry.name, len(works))
@@ -276,7 +276,7 @@ def generate_actress_page(
         article="actress",
         article_id=entry.id,
         sort="-date",
-        hits=6,
+        hits=12,
     )
     if len(works) < 3:
         logger.warning(
