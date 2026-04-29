@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-04-29 13:40:53 +0900",
-  "last_successful_run": "2026-04-29 13:40:53 +0900",
+  "generated_at": "2026-04-29 14:13:49 +0900",
+  "last_successful_run": "2026-04-29 14:13:49 +0900",
   "consecutive_failures": 0,
   "stats": {
     "total_actress_pages": 292,
@@ -46,7 +46,9 @@
         "reason": "insufficient_works"
       }
     ],
-    "ranking_items": 10
+    "ranking_items": 10,
+    "genre_ranking_pages": 10,
+    "monthly_ranking_pages": 3
   },
   "actress_pages": [
     {
@@ -2818,6 +2820,121 @@
       "hash": "c501f41dbae689e8",
       "works_count": 20,
       "thumb_url": "https://pics.dmm.co.jp/digital/video/sone00642/sone00642pl.jpg"
+    }
+  ],
+  "genre_ranking_pages": [
+    {
+      "id": "4025",
+      "slug": "4025",
+      "name": "単体作品",
+      "status": "ok",
+      "url": "https://fanza-actress.com/ranking/genre/4025.html",
+      "hash": "d0356abebb2f25e4",
+      "items_count": 10
+    },
+    {
+      "id": "1027",
+      "slug": "1027",
+      "name": "美少女",
+      "status": "ok",
+      "url": "https://fanza-actress.com/ranking/genre/1027.html",
+      "hash": "06b5c94c850fa246",
+      "items_count": 10
+    },
+    {
+      "id": "2001",
+      "slug": "2001",
+      "name": "巨乳",
+      "status": "ok",
+      "url": "https://fanza-actress.com/ranking/genre/2001.html",
+      "hash": "55b779510cf0480b",
+      "items_count": 10
+    },
+    {
+      "id": "5001",
+      "slug": "5001",
+      "name": "中出し",
+      "status": "ok",
+      "url": "https://fanza-actress.com/ranking/genre/5001.html",
+      "hash": "d31a99fc1de2a08e",
+      "items_count": 10
+    },
+    {
+      "id": "1031",
+      "slug": "1031",
+      "name": "痴女",
+      "status": "ok",
+      "url": "https://fanza-actress.com/ranking/genre/1031.html",
+      "hash": "ab124000037ec93e",
+      "items_count": 10
+    },
+    {
+      "id": "5002",
+      "slug": "5002",
+      "name": "フェラ",
+      "status": "ok",
+      "url": "https://fanza-actress.com/ranking/genre/5002.html",
+      "hash": "05da5d0a5e395bfe",
+      "items_count": 10
+    },
+    {
+      "id": "2006",
+      "slug": "2006",
+      "name": "スレンダー",
+      "status": "ok",
+      "url": "https://fanza-actress.com/ranking/genre/2006.html",
+      "hash": "614654629860624e",
+      "items_count": 10
+    },
+    {
+      "id": "4005",
+      "slug": "4005",
+      "name": "乱交",
+      "status": "ok",
+      "url": "https://fanza-actress.com/ranking/genre/4005.html",
+      "hash": "df42c7012d97c7a8",
+      "items_count": 10
+    },
+    {
+      "id": "4030",
+      "slug": "4030",
+      "name": "淫乱・ハード系",
+      "status": "ok",
+      "url": "https://fanza-actress.com/ranking/genre/4030.html",
+      "hash": "670e325145545cca",
+      "items_count": 10
+    },
+    {
+      "id": "4106",
+      "slug": "4106",
+      "name": "騎乗位",
+      "status": "ok",
+      "url": "https://fanza-actress.com/ranking/genre/4106.html",
+      "hash": "39df2a0d0b415249",
+      "items_count": 10
+    }
+  ],
+  "monthly_ranking_pages": [
+    {
+      "slug": "2026-04",
+      "status": "ok",
+      "url": "https://fanza-actress.com/ranking/monthly/2026-04.html",
+      "hash": "baad91ff63866401",
+      "items_count": 10
+    },
+    {
+      "slug": "2026-03",
+      "status": "ok",
+      "url": "https://fanza-actress.com/ranking/monthly/2026-03.html",
+      "hash": "49efd8573bf6e400",
+      "items_count": 10
+    },
+    {
+      "slug": "2026-02",
+      "status": "ok",
+      "url": "https://fanza-actress.com/ranking/monthly/2026-02.html",
+      "hash": "a2d855c93861a528",
+      "items_count": 10
     }
   ],
   "ranking": {

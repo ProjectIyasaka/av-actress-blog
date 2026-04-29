@@ -53,6 +53,8 @@ ACTRESS_INDEX_OUT = ROOT / "actress" / "index.html"
 GENRE_OUT_DIR = ROOT / "genre"
 GENRE_INDEX_OUT = ROOT / "genre" / "index.html"
 RANKING_OUT = ROOT / "ranking-top10.html"
+GENRE_RANKING_OUT_DIR = ROOT / "ranking" / "genre"
+MONTHLY_RANKING_OUT_DIR = ROOT / "ranking" / "monthly"
 INDEX_OUT = ROOT / "index.html"
 SITEMAP_OUT = ROOT / "sitemap.xml"
 
@@ -64,7 +66,12 @@ logger = logging.getLogger("generate")
 
 
 def _ensure_dirs() -> None:
-    for d in (TMP_BUILD, TMP_BUILD / "actress", TMP_BUILD / "genre", LOGS_DIR, ACTRESS_OUT_DIR, GENRE_OUT_DIR):
+    for d in (
+        TMP_BUILD, TMP_BUILD / "actress", TMP_BUILD / "genre",
+        TMP_BUILD / "ranking" / "genre", TMP_BUILD / "ranking" / "monthly",
+        LOGS_DIR, ACTRESS_OUT_DIR, GENRE_OUT_DIR,
+        GENRE_RANKING_OUT_DIR, MONTHLY_RANKING_OUT_DIR,
+    ):
         d.mkdir(parents=True, exist_ok=True)
 
 
@@ -358,6 +365,107 @@ def generate_ranking_page(
     return {"status": "ok", "url": canonical_url, "hash": page_hash, "items_count": len(items)}
 
 
+def generate_genre_ranking_page(
+    client: DMMClient,
+    entry: GenreEntry,
+    settings: Settings,
+    generated_at: str,
+    generated_date: str,
+    year: int,
+) -> Optional[dict]:
+    items = client.search_items(
+        article="genre",
+        article_id=entry.genre_id,
+        sort="rank",
+        hits=10,
+    )
+    if len(items) < 5:
+        logger.warning("genre ranking %s (%s): only %d items, skip", entry.genre_id, entry.name, len(items))
+        return {"id": entry.genre_id, "slug": entry.slug, "name": entry.name, "status": "skipped", "reason": "insufficient_items"}
+
+    canonical_url = f"{settings.site_base_url}/ranking/genre/{entry.slug}.html"
+    context = {
+        "page": {"ranked_items": items, "genre_name": entry.name, "genre_slug": entry.slug, "year": year},
+        "canonical_url": canonical_url,
+        "generated_at": generated_at,
+        "generated_date": generated_date,
+    }
+    html = render("ranking_genre.html", context)
+    result = validate_ranking_page(html)
+    if not result.ok:
+        logger.error("genre ranking %s: validation failed: %s", entry.genre_id, result.errors)
+        return {"id": entry.genre_id, "slug": entry.slug, "name": entry.name, "status": "failed", "reason": ";".join(result.errors)}
+
+    tmp_path = TMP_BUILD / "ranking" / "genre" / f"{entry.slug}.html"
+    tmp_path.write_text(html, encoding="utf-8")
+    final_path = GENRE_RANKING_OUT_DIR / f"{entry.slug}.html"
+    _atomic_replace(tmp_path, final_path)
+
+    page_hash = _content_hash(entry.genre_id, [asdict(i) for i in items])
+    return {
+        "id": entry.genre_id,
+        "slug": entry.slug,
+        "name": entry.name,
+        "status": "ok",
+        "url": canonical_url,
+        "hash": page_hash,
+        "items_count": len(items),
+    }
+
+
+def generate_monthly_ranking_page(
+    client: DMMClient,
+    settings: Settings,
+    generated_at: str,
+    generated_date: str,
+    year: int,
+    month: int,
+) -> Optional[dict]:
+    import calendar
+    last_day = calendar.monthrange(year, month)[1]
+    gte = f"{year}-{month:02d}-01T00:00:00"
+    lte = f"{year}-{month:02d}-{last_day:02d}T23:59:59"
+    month_str = f"{month:02d}"
+    slug = f"{year}-{month_str}"
+
+    items = client.search_items(
+        sort="rank",
+        hits=10,
+        gte_date=gte,
+        lte_date=lte,
+    )
+    if len(items) < 5:
+        logger.warning("monthly ranking %s: only %d items, skip", slug, len(items))
+        return {"slug": slug, "status": "skipped", "reason": "insufficient_items"}
+
+    canonical_url = f"{settings.site_base_url}/ranking/monthly/{slug}.html"
+    context = {
+        "page": {"ranked_items": items, "year": year, "month": month_str},
+        "canonical_url": canonical_url,
+        "generated_at": generated_at,
+        "generated_date": generated_date,
+    }
+    html = render("ranking_monthly.html", context)
+    result = validate_ranking_page(html)
+    if not result.ok:
+        logger.error("monthly ranking %s: validation failed: %s", slug, result.errors)
+        return {"slug": slug, "status": "failed", "reason": ";".join(result.errors)}
+
+    tmp_path = TMP_BUILD / "ranking" / "monthly" / f"{slug}.html"
+    tmp_path.write_text(html, encoding="utf-8")
+    final_path = MONTHLY_RANKING_OUT_DIR / f"{slug}.html"
+    _atomic_replace(tmp_path, final_path)
+
+    page_hash = _content_hash(slug, [asdict(i) for i in items])
+    return {
+        "slug": slug,
+        "status": "ok",
+        "url": canonical_url,
+        "hash": page_hash,
+        "items_count": len(items),
+    }
+
+
 def generate_index_page(
     settings: Settings,
     actresses: list[ActressDTO],
@@ -555,6 +663,32 @@ def run(args: argparse.Namespace) -> int:
     if genre_index_result and genre_index_result.get("status") != "ok":
         logger.error("genre index generation failed")
 
+    # Genre ranking pages (top 10 per genre)
+    genre_ranking_results: list[dict] = []
+    for genre_entry in genres_cfg:
+        gr = generate_genre_ranking_page(client, genre_entry, settings, generated_at, generated_date, year)
+        if gr:
+            genre_ranking_results.append(gr)
+    logger.info("GENRE RANKING: %d pages generated", sum(1 for r in genre_ranking_results if r.get("status") == "ok"))
+
+    # Monthly ranking pages (current month + past 2 months)
+    monthly_ranking_results: list[dict] = []
+    for delta in range(3):
+        target = now - timedelta(days=delta * 30)
+        mr = generate_monthly_ranking_page(
+            client, settings, generated_at, generated_date, target.year, target.month
+        )
+        if mr:
+            monthly_ranking_results.append(mr)
+    seen_slugs: set[str] = set()
+    deduped_monthly: list[dict] = []
+    for r in monthly_ranking_results:
+        if r.get("slug") not in seen_slugs:
+            seen_slugs.add(r["slug"])
+            deduped_monthly.append(r)
+    monthly_ranking_results = deduped_monthly
+    logger.info("MONTHLY RANKING: %d pages generated", sum(1 for r in monthly_ranking_results if r.get("status") == "ok"))
+
     # Sitemap
     actress_urls = [
         (r["url"], today_iso)
@@ -568,7 +702,17 @@ def run(args: argparse.Namespace) -> int:
     ]
     if genre_index_result and genre_index_result.get("status") == "ok":
         genre_urls.insert(0, (genre_index_result["url"], today_iso))
-    generate_sitemap(settings, actress_urls + genre_urls, today_iso)
+    genre_ranking_urls = [
+        (r["url"], today_iso)
+        for r in genre_ranking_results
+        if r.get("status") == "ok" and r.get("url")
+    ]
+    monthly_ranking_urls = [
+        (r["url"], today_iso)
+        for r in monthly_ranking_results
+        if r.get("status") == "ok" and r.get("url")
+    ]
+    generate_sitemap(settings, actress_urls + genre_urls + genre_ranking_urls + monthly_ranking_urls, today_iso)
 
     # Manifest
     manifest = {
@@ -579,9 +723,13 @@ def run(args: argparse.Namespace) -> int:
             "total_actress_pages": success_count,
             "skipped_actresses": [r for r in actress_results if r.get("status") != "ok"],
             "ranking_items": ranking_result.get("items_count", 0),
+            "genre_ranking_pages": sum(1 for r in genre_ranking_results if r.get("status") == "ok"),
+            "monthly_ranking_pages": sum(1 for r in monthly_ranking_results if r.get("status") == "ok"),
         },
         "actress_pages": actress_results,
         "genre_pages": genre_results,
+        "genre_ranking_pages": genre_ranking_results,
+        "monthly_ranking_pages": monthly_ranking_results,
         "ranking": ranking_result,
         "index": index_result,
         "generator_version": "0.1.0",

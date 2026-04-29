@@ -167,6 +167,8 @@ class DMMClient:
         article: Optional[str] = None,
         article_id: Optional[str] = None,
         keyword: Optional[str] = None,
+        gte_date: Optional[str] = None,
+        lte_date: Optional[str] = None,
     ) -> list[ItemDTO]:
         params: dict[str, Any] = {
             "site": site,
@@ -181,6 +183,10 @@ class DMMClient:
             params["article_id"] = article_id
         if keyword:
             params["keyword"] = keyword
+        if gte_date:
+            params["gte_date"] = gte_date
+        if lte_date:
+            params["lte_date"] = lte_date
         data = self._request("ItemList", params)
         items_raw = data.get("result", {}).get("items", []) or []
         return [self._normalize_item(raw) for raw in items_raw]
