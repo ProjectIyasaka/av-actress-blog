@@ -28,6 +28,23 @@
             <p class="post-card-meta">{{ generated_date }}</p>
           </div>
         </a>
+        {% for card in page.summary_cards %}
+        <a href="{{ card.url }}" class="post-card">
+          {% if card.thumb_url %}
+          <img class="post-card-thumb" src="{{ card.thumb_url }}" alt="{{ card.title }}" loading="lazy" style="width:100%; height:240px; object-fit:cover; object-position:center 20%; background:#1a1a1a; display:block;">
+          {% else %}
+          <div class="post-card-thumb" style="background: linear-gradient(160deg, #1a0a0f 0%, #0e0e14 100%); display:flex; align-items:center; justify-content:center; color:var(--gold);">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 21h8M12 17v4M17 3H7L5 9c0 3.31 3.13 6 7 6s7-2.69 7-6l-2-6z"/><path d="M5 9H3a1 1 0 0 0-1 1v1a3 3 0 0 0 3 3M19 9h2a1 1 0 0 1 1 1v1a3 3 0 0 1-3 3"/></svg>
+          </div>
+          {% endif %}
+          <div class="post-card-body">
+            <span class="post-card-cat">{{ card.category }}</span>
+            <p class="post-card-title">{{ card.title }}</p>
+            <p class="post-card-excerpt">{{ card.excerpt }}</p>
+            <p class="post-card-meta">{{ card.date }}</p>
+          </div>
+        </a>
+        {% endfor %}
       </div>
     </section>
 

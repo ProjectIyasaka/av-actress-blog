@@ -402,6 +402,7 @@ def generate_genre_ranking_page(
     _atomic_replace(tmp_path, final_path)
 
     page_hash = _content_hash(entry.genre_id, [asdict(i) for i in items])
+    thumb_url = next((i.image_large for i in items if i.image_large), None)
     return {
         "id": entry.genre_id,
         "slug": entry.slug,
@@ -410,6 +411,8 @@ def generate_genre_ranking_page(
         "url": canonical_url,
         "hash": page_hash,
         "items_count": len(items),
+        "thumb_url": thumb_url,
+        "year": year,
     }
 
 
@@ -457,12 +460,16 @@ def generate_monthly_ranking_page(
     _atomic_replace(tmp_path, final_path)
 
     page_hash = _content_hash(slug, [asdict(i) for i in items])
+    thumb_url = next((i.image_large for i in items if i.image_large), None)
     return {
         "slug": slug,
         "status": "ok",
         "url": canonical_url,
         "hash": page_hash,
         "items_count": len(items),
+        "thumb_url": thumb_url,
+        "year": year,
+        "month": month_str,
     }
 
 
@@ -474,13 +481,20 @@ def generate_index_page(
     generated_at: str,
     generated_date: str,
     year: int,
+    summary_cards: Optional[list[dict]] = None,
 ) -> Optional[dict]:
     canonical_url = f"{settings.site_base_url}/"
     actress_view = []
     for a in actresses[:12]:
         actress_view.append({"dto": a, "thumb_url": thumb_urls.get(a.actress_id) or a.image_large})
     context = {
-        "page": {"actresses": actress_view, "top_item": top_item, "year": year, "total_actresses": len(actresses)},
+        "page": {
+            "actresses": actress_view,
+            "top_item": top_item,
+            "year": year,
+            "total_actresses": len(actresses),
+            "summary_cards": summary_cards or [],
+        },
         "canonical_url": canonical_url,
         "generated_at": generated_at,
         "generated_date": generated_date,
@@ -629,14 +643,6 @@ def run(args: argparse.Namespace) -> int:
             )
             return 4
 
-    # Generate index
-    index_result = generate_index_page(
-        settings, actress_dtos, actress_thumb_urls, top_item, generated_at, generated_date, year
-    )
-    if not index_result or index_result.get("status") != "ok":
-        logger.error("index generation failed")
-        return 5
-
     # Generate actress index (full list)
     actress_index_result = generate_actress_index_page(
         settings, actress_dtos, actress_thumb_urls, generated_at, generated_date
@@ -688,6 +694,38 @@ def run(args: argparse.Namespace) -> int:
             deduped_monthly.append(r)
     monthly_ranking_results = deduped_monthly
     logger.info("MONTHLY RANKING: %d pages generated", sum(1 for r in monthly_ranking_results if r.get("status") == "ok"))
+
+    # Build summary cards for index page (monthly + top genre rankings)
+    summary_cards: list[dict] = []
+    for r in monthly_ranking_results[:1]:
+        if r.get("status") == "ok":
+            summary_cards.append({
+                "url": f"/ranking/monthly/{r['slug']}.html",
+                "thumb_url": r.get("thumb_url"),
+                "category": "月別ランキング",
+                "title": f"【{r['year']}年{r['month']}月】FANZA人気ランキングTOP10",
+                "excerpt": f"{r['year']}年{r['month']}月にリリースされた作品の人気TOP10を厳選。",
+                "date": generated_date,
+            })
+    for r in genre_ranking_results[:4]:
+        if r.get("status") == "ok":
+            summary_cards.append({
+                "url": f"/ranking/genre/{r['slug']}.html",
+                "thumb_url": r.get("thumb_url"),
+                "category": "ジャンル別ランキング",
+                "title": f"【{r.get('year', year)}年最新】{r['name']}おすすめTOP10",
+                "excerpt": f"FANZA {r['name']}部門の人気ランキングTOP10。無料サンプル動画付き。",
+                "date": generated_date,
+            })
+
+    # Generate index (after rankings so summary_cards are available)
+    index_result = generate_index_page(
+        settings, actress_dtos, actress_thumb_urls, top_item, generated_at, generated_date, year,
+        summary_cards=summary_cards,
+    )
+    if not index_result or index_result.get("status") != "ok":
+        logger.error("index generation failed")
+        return 5
 
     # Sitemap
     actress_urls = [

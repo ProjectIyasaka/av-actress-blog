@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-04-29 14:13:49 +0900",
-  "last_successful_run": "2026-04-29 14:13:49 +0900",
+  "generated_at": "2026-04-29 16:45:37 +0900",
+  "last_successful_run": "2026-04-29 16:45:37 +0900",
   "consecutive_failures": 0,
   "stats": {
     "total_actress_pages": 292,
@@ -2830,7 +2830,9 @@
       "status": "ok",
       "url": "https://fanza-actress.com/ranking/genre/4025.html",
       "hash": "d0356abebb2f25e4",
-      "items_count": 10
+      "items_count": 10,
+      "thumb_url": "https://pics.dmm.co.jp/digital/video/snos00131/snos00131pl.jpg",
+      "year": 2026
     },
     {
       "id": "1027",
@@ -2839,7 +2841,9 @@
       "status": "ok",
       "url": "https://fanza-actress.com/ranking/genre/1027.html",
       "hash": "06b5c94c850fa246",
-      "items_count": 10
+      "items_count": 10,
+      "thumb_url": "https://pics.dmm.co.jp/digital/video/snos00131/snos00131pl.jpg",
+      "year": 2026
     },
     {
       "id": "2001",
@@ -2848,7 +2852,9 @@
       "status": "ok",
       "url": "https://fanza-actress.com/ranking/genre/2001.html",
       "hash": "55b779510cf0480b",
-      "items_count": 10
+      "items_count": 10,
+      "thumb_url": "https://pics.dmm.co.jp/digital/video/snos00038/snos00038pl.jpg",
+      "year": 2026
     },
     {
       "id": "5001",
@@ -2857,7 +2863,9 @@
       "status": "ok",
       "url": "https://fanza-actress.com/ranking/genre/5001.html",
       "hash": "d31a99fc1de2a08e",
-      "items_count": 10
+      "items_count": 10,
+      "thumb_url": "https://pics.dmm.co.jp/digital/video/nqtd00021/nqtd00021pl.jpg",
+      "year": 2026
     },
     {
       "id": "1031",
@@ -2866,7 +2874,9 @@
       "status": "ok",
       "url": "https://fanza-actress.com/ranking/genre/1031.html",
       "hash": "ab124000037ec93e",
-      "items_count": 10
+      "items_count": 10,
+      "thumb_url": "https://pics.dmm.co.jp/digital/video/13dsvr01668/13dsvr01668pl.jpg",
+      "year": 2026
     },
     {
       "id": "5002",
@@ -2875,7 +2885,9 @@
       "status": "ok",
       "url": "https://fanza-actress.com/ranking/genre/5002.html",
       "hash": "05da5d0a5e395bfe",
-      "items_count": 10
+      "items_count": 10,
+      "thumb_url": "https://pics.dmm.co.jp/digital/video/mida00493/mida00493pl.jpg",
+      "year": 2026
     },
     {
       "id": "2006",
@@ -2884,7 +2896,9 @@
       "status": "ok",
       "url": "https://fanza-actress.com/ranking/genre/2006.html",
       "hash": "614654629860624e",
-      "items_count": 10
+      "items_count": 10,
+      "thumb_url": "https://pics.dmm.co.jp/digital/video/snos00038/snos00038pl.jpg",
+      "year": 2026
     },
     {
       "id": "4005",
@@ -2893,7 +2907,9 @@
       "status": "ok",
       "url": "https://fanza-actress.com/ranking/genre/4005.html",
       "hash": "df42c7012d97c7a8",
-      "items_count": 10
+      "items_count": 10,
+      "thumb_url": "https://pics.dmm.co.jp/digital/video/mird00277/mird00277pl.jpg",
+      "year": 2026
     },
     {
       "id": "4030",
@@ -2902,7 +2918,9 @@
       "status": "ok",
       "url": "https://fanza-actress.com/ranking/genre/4030.html",
       "hash": "670e325145545cca",
-      "items_count": 10
+      "items_count": 10,
+      "thumb_url": "https://pics.dmm.co.jp/digital/video/snos00131/snos00131pl.jpg",
+      "year": 2026
     },
     {
       "id": "4106",
@@ -2911,7 +2929,9 @@
       "status": "ok",
       "url": "https://fanza-actress.com/ranking/genre/4106.html",
       "hash": "39df2a0d0b415249",
-      "items_count": 10
+      "items_count": 10,
+      "thumb_url": "https://pics.dmm.co.jp/digital/video/sone00642/sone00642pl.jpg",
+      "year": 2026
     }
   ],
   "monthly_ranking_pages": [
@@ -2920,21 +2940,30 @@
       "status": "ok",
       "url": "https://fanza-actress.com/ranking/monthly/2026-04.html",
       "hash": "baad91ff63866401",
-      "items_count": 10
+      "items_count": 10,
+      "thumb_url": "https://pics.dmm.co.jp/digital/video/snos00131/snos00131pl.jpg",
+      "year": 2026,
+      "month": "04"
     },
     {
       "slug": "2026-03",
       "status": "ok",
       "url": "https://fanza-actress.com/ranking/monthly/2026-03.html",
       "hash": "49efd8573bf6e400",
-      "items_count": 10
+      "items_count": 10,
+      "thumb_url": "https://pics.dmm.co.jp/digital/video/snos00168/snos00168pl.jpg",
+      "year": 2026,
+      "month": "03"
     },
     {
       "slug": "2026-02",
       "status": "ok",
       "url": "https://fanza-actress.com/ranking/monthly/2026-02.html",
       "hash": "a2d855c93861a528",
-      "items_count": 10
+      "items_count": 10,
+      "thumb_url": "https://pics.dmm.co.jp/digital/video/mird00271/mird00271pl.jpg",
+      "year": 2026,
+      "month": "02"
     }
   ],
   "ranking": {
