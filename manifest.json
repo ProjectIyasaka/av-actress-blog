@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-04-29 16:59:07 +0900",
-  "last_successful_run": "2026-04-29 16:59:07 +0900",
+  "generated_at": "2026-04-29 17:08:23 +0900",
+  "last_successful_run": "2026-04-29 17:08:23 +0900",
   "consecutive_failures": 0,
   "stats": {
     "total_actress_pages": 292,
@@ -2832,6 +2832,13 @@
       "hash": "d0356abebb2f25e4",
       "items_count": 10,
       "thumb_url": "https://pics.dmm.co.jp/digital/video/snos00131/snos00131pl.jpg",
+      "thumb_candidates": [
+        "https://pics.dmm.co.jp/digital/video/snos00131/snos00131pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/snos00038/snos00038pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/snos00168/snos00168pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/mida00470/mida00470pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/snos00115/snos00115pl.jpg"
+      ],
       "year": 2026
     },
     {
@@ -2843,6 +2850,13 @@
       "hash": "06b5c94c850fa246",
       "items_count": 10,
       "thumb_url": "https://pics.dmm.co.jp/digital/video/snos00131/snos00131pl.jpg",
+      "thumb_candidates": [
+        "https://pics.dmm.co.jp/digital/video/snos00131/snos00131pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/snos00038/snos00038pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/mida00470/mida00470pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/nqtd00021/nqtd00021pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/snos00115/snos00115pl.jpg"
+      ],
       "year": 2026
     },
     {
@@ -2854,6 +2868,13 @@
       "hash": "55b779510cf0480b",
       "items_count": 10,
       "thumb_url": "https://pics.dmm.co.jp/digital/video/snos00038/snos00038pl.jpg",
+      "thumb_candidates": [
+        "https://pics.dmm.co.jp/digital/video/snos00038/snos00038pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/mida00470/mida00470pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/snos00115/snos00115pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/snos00152/snos00152pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/1start00148/1start00148pl.jpg"
+      ],
       "year": 2026
     },
     {
@@ -2865,6 +2886,13 @@
       "hash": "d31a99fc1de2a08e",
       "items_count": 10,
       "thumb_url": "https://pics.dmm.co.jp/digital/video/nqtd00021/nqtd00021pl.jpg",
+      "thumb_candidates": [
+        "https://pics.dmm.co.jp/digital/video/nqtd00021/nqtd00021pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/h_1711dal00005/h_1711dal00005pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/1svvrt00072/1svvrt00072pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/1start00148/1start00148pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/cawd00900/cawd00900pl.jpg"
+      ],
       "year": 2026
     },
     {
@@ -2876,6 +2904,13 @@
       "hash": "ab124000037ec93e",
       "items_count": 10,
       "thumb_url": "https://pics.dmm.co.jp/digital/video/13dsvr01668/13dsvr01668pl.jpg",
+      "thumb_candidates": [
+        "https://pics.dmm.co.jp/digital/video/13dsvr01668/13dsvr01668pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/savr01002/savr01002pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/mida00062/mida00062pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/yuj00055/yuj00055pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/ofje00504/ofje00504pl.jpg"
+      ],
       "year": 2026
     },
     {
@@ -2887,6 +2922,13 @@
       "hash": "05da5d0a5e395bfe",
       "items_count": 10,
       "thumb_url": "https://pics.dmm.co.jp/digital/video/mida00493/mida00493pl.jpg",
+      "thumb_candidates": [
+        "https://pics.dmm.co.jp/digital/video/mida00493/mida00493pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/ipzz00753/ipzz00753pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/ofje00501/ofje00501pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/sone00543/sone00543pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/mdvr00419/mdvr00419pl.jpg"
+      ],
       "year": 2026
     },
     {
@@ -2898,6 +2940,13 @@
       "hash": "614654629860624e",
       "items_count": 10,
       "thumb_url": "https://pics.dmm.co.jp/digital/video/snos00038/snos00038pl.jpg",
+      "thumb_candidates": [
+        "https://pics.dmm.co.jp/digital/video/snos00038/snos00038pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/snos00168/snos00168pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/snos00152/snos00152pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/ofje00593/ofje00593pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/ipok00002/ipok00002pl.jpg"
+      ],
       "year": 2026
     },
     {
@@ -2909,6 +2958,13 @@
       "hash": "df42c7012d97c7a8",
       "items_count": 10,
       "thumb_url": "https://pics.dmm.co.jp/digital/video/mird00277/mird00277pl.jpg",
+      "thumb_candidates": [
+        "https://pics.dmm.co.jp/digital/video/mird00277/mird00277pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/snos00136/snos00136pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/bban00571/bban00571pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/1start00258/1start00258pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/snos00151/snos00151pl.jpg"
+      ],
       "year": 2026
     },
     {
@@ -2920,6 +2976,13 @@
       "hash": "670e325145545cca",
       "items_count": 10,
       "thumb_url": "https://pics.dmm.co.jp/digital/video/snos00131/snos00131pl.jpg",
+      "thumb_candidates": [
+        "https://pics.dmm.co.jp/digital/video/snos00131/snos00131pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/snos00168/snos00168pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/cawd00900/cawd00900pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/ofje00593/ofje00593pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/sone00543/sone00543pl.jpg"
+      ],
       "year": 2026
     },
     {
@@ -2931,6 +2994,13 @@
       "hash": "39df2a0d0b415249",
       "items_count": 10,
       "thumb_url": "https://pics.dmm.co.jp/digital/video/sone00642/sone00642pl.jpg",
+      "thumb_candidates": [
+        "https://pics.dmm.co.jp/digital/video/sone00642/sone00642pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/ipzz00768/ipzz00768pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/mird00271/mird00271pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/huntc00552/huntc00552pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/dass00845/dass00845pl.jpg"
+      ],
       "year": 2026
     }
   ],
@@ -2942,6 +3012,13 @@
       "hash": "baad91ff63866401",
       "items_count": 10,
       "thumb_url": "https://pics.dmm.co.jp/digital/video/snos00131/snos00131pl.jpg",
+      "thumb_candidates": [
+        "https://pics.dmm.co.jp/digital/video/snos00131/snos00131pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/snos00115/snos00115pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/mird00277/mird00277pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/snos00186/snos00186pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/mdvr00419/mdvr00419pl.jpg"
+      ],
       "year": 2026,
       "month": "04"
     },
@@ -2952,6 +3029,13 @@
       "hash": "49efd8573bf6e400",
       "items_count": 10,
       "thumb_url": "https://pics.dmm.co.jp/digital/video/snos00168/snos00168pl.jpg",
+      "thumb_candidates": [
+        "https://pics.dmm.co.jp/digital/video/snos00168/snos00168pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/snos00152/snos00152pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/pfes00122/pfes00122pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/mimk00271/mimk00271pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/savr01002/savr01002pl.jpg"
+      ],
       "year": 2026,
       "month": "03"
     },
@@ -2962,6 +3046,13 @@
       "hash": "a2d855c93861a528",
       "items_count": 10,
       "thumb_url": "https://pics.dmm.co.jp/digital/video/mird00271/mird00271pl.jpg",
+      "thumb_candidates": [
+        "https://pics.dmm.co.jp/digital/video/mird00271/mird00271pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/snos00095/snos00095pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/sqte00663/sqte00663pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/sqte00661/sqte00661pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/hows00016/hows00016pl.jpg"
+      ],
       "year": 2026,
       "month": "02"
     }

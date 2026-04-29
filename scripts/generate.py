@@ -402,7 +402,8 @@ def generate_genre_ranking_page(
     _atomic_replace(tmp_path, final_path)
 
     page_hash = _content_hash(entry.genre_id, [asdict(i) for i in items])
-    thumb_url = next((i.image_large for i in items if i.image_large), None)
+    thumb_candidates = [i.image_large for i in items if i.image_large]
+    thumb_url = thumb_candidates[0] if thumb_candidates else None
     return {
         "id": entry.genre_id,
         "slug": entry.slug,
@@ -412,6 +413,7 @@ def generate_genre_ranking_page(
         "hash": page_hash,
         "items_count": len(items),
         "thumb_url": thumb_url,
+        "thumb_candidates": thumb_candidates[:5],
         "year": year,
     }
 
@@ -460,7 +462,8 @@ def generate_monthly_ranking_page(
     _atomic_replace(tmp_path, final_path)
 
     page_hash = _content_hash(slug, [asdict(i) for i in items])
-    thumb_url = next((i.image_large for i in items if i.image_large), None)
+    thumb_candidates = [i.image_large for i in items if i.image_large]
+    thumb_url = thumb_candidates[0] if thumb_candidates else None
     return {
         "slug": slug,
         "status": "ok",
@@ -468,6 +471,7 @@ def generate_monthly_ranking_page(
         "hash": page_hash,
         "items_count": len(items),
         "thumb_url": thumb_url,
+        "thumb_candidates": thumb_candidates[:5],
         "year": year,
         "month": month_str,
     }
@@ -697,14 +701,22 @@ def run(args: argparse.Namespace) -> int:
 
     # Build summary cards for index page (monthly + top genre rankings)
     # thumb_url dedup: avoid showing the same cover image in multiple cards
+    # Seed with top_item image so the hardcoded first card doesn't clash
     used_thumbs: set[str] = set()
+    if top_item and top_item.image_large:
+        used_thumbs.add(top_item.image_large)
     summary_cards: list[dict] = []
+
+    def _pick_thumb(r: dict) -> Optional[str]:
+        for candidate in r.get("thumb_candidates") or [r.get("thumb_url")]:
+            if candidate and candidate not in used_thumbs:
+                used_thumbs.add(candidate)
+                return candidate
+        return None
 
     for r in monthly_ranking_results[:1]:
         if r.get("status") == "ok":
-            thumb = r.get("thumb_url")
-            if thumb:
-                used_thumbs.add(thumb)
+            thumb = _pick_thumb(r)
             summary_cards.append({
                 "url": f"/ranking/monthly/{r['slug']}.html",
                 "thumb_url": thumb,
@@ -716,11 +728,7 @@ def run(args: argparse.Namespace) -> int:
     for r in genre_ranking_results:
         if r.get("status") != "ok":
             continue
-        thumb = r.get("thumb_url")
-        if thumb and thumb in used_thumbs:
-            continue
-        if thumb:
-            used_thumbs.add(thumb)
+        thumb = _pick_thumb(r)
         summary_cards.append({
             "url": f"/ranking/genre/{r['slug']}.html",
             "thumb_url": thumb,
