@@ -17,9 +17,9 @@
         <span class="article-category">ランキング</span>
         <h1 class="article-title">【{{ page.year }}年最新】FANZA人気ランキングTOP{{ items|length }}<br>無料サンプル動画付き</h1>
         <div class="article-meta">
-          <span>📅 {{ generated_date }}</span>
-          <span>✏️ AV女優ナビ編集部</span>
-          <span>📖 読了目安：10分</span>
+          <span>{{ generated_date }}</span>
+          <span>AV女優ナビ編集部</span>
+          <span>読了目安：10分</span>
         </div>
         <div class="eyecatch">🏆 {{ page.year }}年版 FANZA人気ランキング</div>
       </header>
@@ -30,8 +30,8 @@
           無料サンプル動画付きで解説。FANZAで気になった作品はそのまま視聴できます。
         </div>
 
-        <nav class="toc">
-          <p class="toc-title">📋 目次</p>
+        <nav class="toc" aria-label="目次">
+          <p class="toc-title">目次</p>
           <ol>
             {% for item in items[:3] %}
             <li><a href="#rank{{ loop.index }}">{{ loop.index }}位：{{ item.title }}</a></li>
@@ -121,7 +121,7 @@
 
   <aside class="sidebar">
     <div class="sidebar-cta-banner">
-      <p style="font-size:11px; margin-bottom:4px; opacity:.8;">✅ 無料登録・サンプル視聴OK</p>
+      <p style="font-size:11px; margin-bottom:4px; opacity:.8;">無料登録・サンプル視聴OK</p>
       <p style="font-weight:700; font-size:14px; color:#fff;">FANZAで<br>本編を楽しもう</p>
       {% if items %}
       <a href="{{ items[0].affiliate_url }}" class="btn-sidebar-cta" target="_blank" rel="noopener sponsored">

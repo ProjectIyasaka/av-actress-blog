@@ -10,7 +10,7 @@
   --bg3:    #242424;
   --border: #2e2e2e;
   --text:   #e8e8e8;
-  --muted:  #888;
+  --muted:  #9e9e9e; /* #888 is 4.1:1 on bg3 (#242424) — bumped to pass WCAG AA (4.5:1) */
   --white:  #ffffff;
   --radius: 10px;
 }
@@ -21,12 +21,13 @@ body {
   font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', sans-serif;
   background: var(--bg);
   color: var(--text);
-  font-size: 15px;
+  font-size: 16px; /* 15px caused iOS auto-zoom on inputs; 16px is the minimum */
   line-height: 1.8;
 }
 
 a { color: var(--pink); text-decoration: none; }
 a:hover { opacity: .8; }
+a:focus-visible { outline: 2px solid var(--pink); outline-offset: 3px; border-radius: 3px; }
 
 img { max-width: 100%; height: auto; }
 
@@ -116,8 +117,10 @@ img { max-width: 100%; height: auto; }
   overflow: hidden;
   display: block;
   color: var(--text);
+  cursor: pointer;
   transition: transform .2s, border-color .2s, box-shadow .2s;
 }
+.post-card:focus-visible { outline: 2px solid var(--pink); outline-offset: 2px; }
 .post-card:hover {
   transform: translateY(-4px);
   border-color: var(--pink);
@@ -507,6 +510,7 @@ img { max-width: 100%; height: auto; }
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
+  cursor: pointer;
   transition: transform .2s, box-shadow .2s, border-color .2s;
 }
 .work-card:hover {
@@ -538,16 +542,21 @@ img { max-width: 100%; height: auto; }
   margin-bottom: 8px;
 }
 .btn-work {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: var(--pink);
   color: var(--white);
   font-size: 12px;
   font-weight: 700;
   padding: 7px 12px;
+  min-height: 44px; /* was 40px — touch target minimum */
   border-radius: 6px;
   text-align: center;
+  cursor: pointer;
 }
 .btn-work:hover { background: var(--pink-d); opacity: 1; color: var(--white); }
+.btn-work:focus-visible { outline: 2px solid var(--white); outline-offset: 2px; }
 
 /* ======= Ranking List ======= */
 .ranking-list { list-style: none; padding: 0; counter-reset: ranking; }
@@ -560,6 +569,7 @@ img { max-width: 100%; height: auto; }
   display: flex;
   gap: 16px;
   align-items: center;
+  cursor: pointer;
   transition: border-color .2s, background .2s;
 }
 .ranking-item:hover {
@@ -646,6 +656,7 @@ img { max-width: 100%; height: auto; }
   color: var(--white);
   text-align: center;
   padding: 13px 16px;
+  padding-bottom: max(13px, env(safe-area-inset-bottom)); /* safe area for notch/home indicator */
   font-size: 14px;
   font-weight: 700;
   z-index: 200;
@@ -757,8 +768,7 @@ img { max-width: 100%; height: auto; }
   .header-inner { flex-direction: row; flex-wrap: wrap; height: auto; padding: 10px 16px; }
   .site-logo { flex: 1; }
 
-  /* フォントサイズ */
-  body { font-size: 14px; }
+  /* フォントサイズ (bodyは16px維持 — iOS auto-zoom防止) */
   .article-body h2 { font-size: 18px; }
   .post-card-excerpt, .ranking-desc { font-size: 13px; }
 
@@ -771,6 +781,29 @@ img { max-width: 100%; height: auto; }
   .ranking-cta { width: 100%; text-align: center; padding: 12px; min-height: 44px; display: flex; align-items: center; justify-content: center; }
 
   /* タップ領域 */
-  .btn-work { min-height: 40px; display: flex; align-items: center; justify-content: center; }
+  .btn-work { min-height: 44px; display: flex; align-items: center; justify-content: center; }
   .btn-cta { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; }
+}
+
+/* ======= Accessibility: Focus States ======= */
+:focus-visible {
+  outline: 2px solid var(--pink);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+.btn-cta:focus-visible,
+.btn-sidebar-cta:focus-visible,
+.age-btn-yes:focus-visible {
+  outline: 2px solid var(--white);
+  outline-offset: 2px;
+}
+
+/* ======= Reduced Motion ======= */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
 }

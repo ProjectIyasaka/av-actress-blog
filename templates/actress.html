@@ -18,8 +18,8 @@
         <span class="article-category">女優プロフィール</span>
         <h1 class="article-title">{{ actress.name }}のプロフィール<br>出演作品{{ works|length }}選</h1>
         <div class="article-meta">
-          <span>📅 {{ generated_date }}</span>
-          <span>✏️ AV女優ナビ編集部</span>
+          <span>{{ generated_date }}</span>
+          <span>AV女優ナビ編集部</span>
         </div>
       </header>
 
@@ -29,12 +29,14 @@
           {% if actress.image_large %}
           <img class="actress-avatar" src="{{ actress.image_large }}" alt="{{ actress.name }}" loading="lazy" style="width:120px;height:120px;border-radius:50%;object-fit:cover;">
           {% else %}
-          <div class="actress-avatar">👩</div>
+          <div class="actress-avatar" aria-hidden="true" style="font-size:40px;color:var(--muted);">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" fill="currentColor" stroke="none"/></svg>
+          </div>
           {% endif %}
           <div class="actress-info">
             <h3>{{ actress.name }}</h3>
             {% if actress.ruby %}<p class="ruby">{{ actress.ruby }}</p>{% endif %}
-            <p style="font-size:13px; color:#888;">
+            <p style="font-size:13px; color:var(--muted);">
               {% if actress.birthday %}誕生日：{{ actress.birthday }}{% endif %}
               {% if actress.height %} | 身長：{{ actress.height }}cm{% endif %}
               {% if actress.cup %} | カップ：{{ actress.cup }}{% endif %}
@@ -71,7 +73,9 @@
             {% if work.image_large %}
             <img class="work-card-thumb" src="{{ work.image_large }}" alt="{{ work.title }}" loading="lazy" style="width:100%;aspect-ratio:16/10;object-fit:cover;">
             {% else %}
-            <div class="work-card-thumb">🎬</div>
+            <div class="work-card-thumb" style="display:flex;align-items:center;justify-content:center;color:var(--muted);" aria-hidden="true">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><polygon points="10,9 16,12 10,15" fill="currentColor" stroke="none"/></svg>
+            </div>
             {% endif %}
             <div class="work-card-body">
               <p class="work-title">{{ work.title }}</p>
@@ -102,7 +106,7 @@
 
   <aside class="sidebar">
     <div class="sidebar-cta-banner">
-      <p style="font-size:11px; margin-bottom:4px; opacity:.8;">✅ 無料登録・サンプル視聴OK</p>
+      <p style="font-size:11px; margin-bottom:4px; opacity:.8;">無料登録・サンプル視聴OK</p>
       <p style="font-weight:700; font-size:14px; color:#fff;">FANZAで<br>本編を楽しもう</p>
       {% if actress.list_url %}
       <a href="{{ actress.list_url }}" class="btn-sidebar-cta" target="_blank" rel="noopener sponsored">

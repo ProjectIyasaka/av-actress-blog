@@ -4,7 +4,7 @@
 
 {% block hero %}
 <div class="hero-banner">
-  <h1>🔞 <span>AV女優ナビ</span></h1>
+  <h1><span>AV女優ナビ</span><span style="font-size:13px;font-weight:700;background:var(--pink);color:#fff;border-radius:4px;padding:2px 7px;margin-left:10px;vertical-align:middle;">18+</span></h1>
   <p>おすすめ女優・無料サンプル動画・FANZAランキングを毎日更新</p>
 </div>
 {% endblock %}
@@ -14,7 +14,7 @@
 <div class="home-wrapper">
   <main>
     <section id="ranking">
-      <h2 class="section-heading">🏆 ランキング・まとめ記事</h2>
+      <h2 class="section-heading">ランキング・まとめ記事</h2>
       <div class="post-grid">
         <a href="/ranking-top10.html" class="post-card">
           <div class="post-card-thumb" style="background: linear-gradient(135deg, #2a0a1e 0%, #1a0a2a 100%);">🏆</div>
@@ -30,7 +30,7 @@
 
     {% if page.actresses %}
     <section id="actresses" style="margin-top:32px;">
-      <h2 class="section-heading">👩 注目のAV女優</h2>
+      <h2 class="section-heading">注目のAV女優</h2>
       <div class="post-grid">
         {% for entry in page.actresses %}
         {% set actress = entry.dto %}
@@ -54,7 +54,7 @@
 
   <aside class="sidebar">
     <div class="sidebar-cta-banner">
-      <p style="font-size:11px; margin-bottom:4px; opacity:.8;">✅ 無料お試し対応</p>
+      <p style="font-size:11px; margin-bottom:4px; opacity:.8;">無料お試し対応</p>
       <p style="font-weight:700; font-size:14px; color:#fff;">FANZAで<br>本編動画を楽しもう</p>
       {% if page.top_item %}
       <a href="{{ page.top_item.affiliate_url }}" class="btn-sidebar-cta" target="_blank" rel="noopener sponsored">
