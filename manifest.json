@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-04-29 11:02:40 +0900",
-  "last_successful_run": "2026-04-29 11:02:40 +0900",
+  "generated_at": "2026-04-29 11:21:43 +0900",
+  "last_successful_run": "2026-04-29 11:21:43 +0900",
   "consecutive_failures": 0,
   "stats": {
-    "total_actress_pages": 5,
+    "total_actress_pages": 50,
     "skipped_actresses": [],
     "ranking_items": 10
   },
@@ -46,6 +46,366 @@
       "status": "ok",
       "url": "https://av-actress-navi.pages.dev/actress/1107481.html",
       "hash": "ab80ea6a6bd7c100",
+      "works_count": 6
+    },
+    {
+      "id": "1077684",
+      "name": "安達夕莉",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1077684.html",
+      "hash": "2f14f4d4b47920b0",
+      "works_count": 6
+    },
+    {
+      "id": "1069697",
+      "name": "MINAMO",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1069697.html",
+      "hash": "002fe159653559bd",
+      "works_count": 6
+    },
+    {
+      "id": "1057477",
+      "name": "八木奈々",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1057477.html",
+      "hash": "941956ea6ae0c155",
+      "works_count": 6
+    },
+    {
+      "id": "1032130",
+      "name": "佐々木あき",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1032130.html",
+      "hash": "9f569e6a0a2bb65b",
+      "works_count": 6
+    },
+    {
+      "id": "1086581",
+      "name": "浅野こころ",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1086581.html",
+      "hash": "075d327b2a58d17f",
+      "works_count": 6
+    },
+    {
+      "id": "1103456",
+      "name": "山田鈴奈",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1103456.html",
+      "hash": "8b625a8fc0a76581",
+      "works_count": 6
+    },
+    {
+      "id": "1063724",
+      "name": "七瀬アリス",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1063724.html",
+      "hash": "27aef61f7c6c05ad",
+      "works_count": 6
+    },
+    {
+      "id": "1092219",
+      "name": "春陽モカ",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1092219.html",
+      "hash": "e3179ab720de29f7",
+      "works_count": 6
+    },
+    {
+      "id": "26225",
+      "name": "波多野結衣",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/26225.html",
+      "hash": "ba2891073994525b",
+      "works_count": 6
+    },
+    {
+      "id": "1089946",
+      "name": "彩月七緒",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1089946.html",
+      "hash": "db2ff93b38173e06",
+      "works_count": 6
+    },
+    {
+      "id": "1075302",
+      "name": "柏木こなつ",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1075302.html",
+      "hash": "d6037f004b022475",
+      "works_count": 6
+    },
+    {
+      "id": "1093790",
+      "name": "小野坂ゆいか",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1093790.html",
+      "hash": "a00f658949225802",
+      "works_count": 6
+    },
+    {
+      "id": "1020973",
+      "name": "推川ゆうり",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1020973.html",
+      "hash": "62ebc655e5d337fd",
+      "works_count": 6
+    },
+    {
+      "id": "1069961",
+      "name": "ひなたなつ（日向なつ）",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1069961.html",
+      "hash": "af03443bb4cf3ca5",
+      "works_count": 6
+    },
+    {
+      "id": "1089774",
+      "name": "夢実かなえ",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1089774.html",
+      "hash": "e04b29944d6d6bf6",
+      "works_count": 6
+    },
+    {
+      "id": "1092578",
+      "name": "清宮仁愛",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1092578.html",
+      "hash": "79e2da30e8c5b791",
+      "works_count": 6
+    },
+    {
+      "id": "1098810",
+      "name": "篠原いよ",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1098810.html",
+      "hash": "956ef050d5e056ba",
+      "works_count": 6
+    },
+    {
+      "id": "1087778",
+      "name": "月野江すい",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1087778.html",
+      "hash": "3be66922ce6f91dd",
+      "works_count": 6
+    },
+    {
+      "id": "1092427",
+      "name": "北岡果林",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1092427.html",
+      "hash": "353ef1b3af5fe664",
+      "works_count": 6
+    },
+    {
+      "id": "1088602",
+      "name": "逢沢みゆ",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1088602.html",
+      "hash": "f81e59b05323a3c8",
+      "works_count": 6
+    },
+    {
+      "id": "1068671",
+      "name": "北野未奈",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1068671.html",
+      "hash": "e88aa156714670b1",
+      "works_count": 6
+    },
+    {
+      "id": "1054998",
+      "name": "松本いちか",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1054998.html",
+      "hash": "6fd56b9bcc72a1bb",
+      "works_count": 6
+    },
+    {
+      "id": "1079035",
+      "name": "星乃莉子",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1079035.html",
+      "hash": "1f14c48cf4077108",
+      "works_count": 6
+    },
+    {
+      "id": "1042907",
+      "name": "伊藤舞雪",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1042907.html",
+      "hash": "dbc34f860282dab9",
+      "works_count": 6
+    },
+    {
+      "id": "1109954",
+      "name": "博多彩葉",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1109954.html",
+      "hash": "86c3da74949922ab",
+      "works_count": 3
+    },
+    {
+      "id": "1088420",
+      "name": "百田光稀（百田光希）",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1088420.html",
+      "hash": "80a4adca5277c7dc",
+      "works_count": 6
+    },
+    {
+      "id": "1097130",
+      "name": "白岩冬萌（白羅冬萌）",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1097130.html",
+      "hash": "97df541824580c0a",
+      "works_count": 6
+    },
+    {
+      "id": "1078407",
+      "name": "九野ひなの",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1078407.html",
+      "hash": "960166ef6007e2c7",
+      "works_count": 6
+    },
+    {
+      "id": "1070500",
+      "name": "天宮花南",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1070500.html",
+      "hash": "b45c3feb5802145d",
+      "works_count": 6
+    },
+    {
+      "id": "1104815",
+      "name": "ひなの花音",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1104815.html",
+      "hash": "2211694b96a9029d",
+      "works_count": 6
+    },
+    {
+      "id": "1075464",
+      "name": "宮下玲奈",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1075464.html",
+      "hash": "982dfd9c2806d91f",
+      "works_count": 6
+    },
+    {
+      "id": "1021367",
+      "name": "希島あいり",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1021367.html",
+      "hash": "a4df46396de40c0a",
+      "works_count": 6
+    },
+    {
+      "id": "1094002",
+      "name": "莉々はるか",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1094002.html",
+      "hash": "554e8bb8024eafbb",
+      "works_count": 6
+    },
+    {
+      "id": "1109487",
+      "name": "早坂奏音",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1109487.html",
+      "hash": "b62a644fd1c04727",
+      "works_count": 3
+    },
+    {
+      "id": "1104612",
+      "name": "幸村泉希",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1104612.html",
+      "hash": "3c3e02ad02d06010",
+      "works_count": 6
+    },
+    {
+      "id": "1084337",
+      "name": "羽月乃蒼",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1084337.html",
+      "hash": "b514b69176c11a5f",
+      "works_count": 6
+    },
+    {
+      "id": "1072127",
+      "name": "石川澪",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1072127.html",
+      "hash": "3c7341b5fd6be0ff",
+      "works_count": 6
+    },
+    {
+      "id": "1083560",
+      "name": "東城ゆい",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1083560.html",
+      "hash": "320c305eb8cc2866",
+      "works_count": 6
+    },
+    {
+      "id": "1096172",
+      "name": "泉ももか",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1096172.html",
+      "hash": "99b54ac83e9ba065",
+      "works_count": 6
+    },
+    {
+      "id": "1106362",
+      "name": "坂井美桜",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1106362.html",
+      "hash": "877a505f5b80b23f",
+      "works_count": 6
+    },
+    {
+      "id": "1099301",
+      "name": "桜ゆの",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1099301.html",
+      "hash": "0e3f4dda50218700",
+      "works_count": 6
+    },
+    {
+      "id": "1105409",
+      "name": "堀北桃愛",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1105409.html",
+      "hash": "3734911b2a9af039",
+      "works_count": 6
+    },
+    {
+      "id": "1098260",
+      "name": "輝星きら",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1098260.html",
+      "hash": "f7a454d889a2e477",
+      "works_count": 6
+    },
+    {
+      "id": "1101574",
+      "name": "笹倉彩",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1101574.html",
+      "hash": "c00bc9ce39ae0520",
+      "works_count": 6
+    },
+    {
+      "id": "1084346",
+      "name": "川越にこ",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/actress/1084346.html",
+      "hash": "2e930b9e9321d07a",
       "works_count": 6
     }
   ],
