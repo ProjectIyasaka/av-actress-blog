@@ -182,10 +182,12 @@
     </div>
 
     <div class="sidebar-widget">
-      <div class="widget-title">ランキング</div>
+      <div class="widget-title">人気記事</div>
       <div class="widget-body">
-        <ul class="related-list">
-          <li><a href="/ranking-top10.html">📊 おすすめAV女優TOP10【最新版】</a></li>
+        <ul class="related-list popular-list">
+          {% for link in page.popular_links %}
+          <li><span class="rank rank-{{ loop.index }}">{{ loop.index }}</span><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {% endfor %}
         </ul>
       </div>
     </div>

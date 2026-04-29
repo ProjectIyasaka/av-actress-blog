@@ -272,6 +272,7 @@ def generate_actress_page(
     generated_at: str,
     generated_date: str,
     genre_slug_map: Optional[dict] = None,
+    popular_links: Optional[list] = None,
 ) -> Optional[dict]:
     """Returns manifest entry on success, None on skip."""
     actress = client.get_actress_by_id(entry.id)
@@ -298,6 +299,7 @@ def generate_actress_page(
             "works": works,
             "related_actresses": [a for a in related_actresses if a.actress_id != entry.id][:5],
             "genre_slug_map": genre_slug_map or {},
+            "popular_links": popular_links or [],
         },
         "canonical_url": canonical_url,
         "generated_at": generated_at,
@@ -336,7 +338,8 @@ def generate_actress_page(
 
 
 def generate_ranking_page(
-    client: DMMClient, settings: Settings, generated_at: str, generated_date: str, year: int
+    client: DMMClient, settings: Settings, generated_at: str, generated_date: str, year: int,
+    popular_links: Optional[list] = None,
 ) -> Optional[dict]:
     items = client.search_items(
         site="FANZA", service="digital", floor="videoa", sort="rank", hits=10
@@ -347,7 +350,7 @@ def generate_ranking_page(
 
     canonical_url = f"{settings.site_base_url}/ranking-top10.html"
     context = {
-        "page": {"ranked_items": items, "year": year},
+        "page": {"ranked_items": items, "year": year, "popular_links": popular_links or []},
         "canonical_url": canonical_url,
         "generated_at": generated_at,
         "generated_date": generated_date,
@@ -372,6 +375,7 @@ def generate_genre_ranking_page(
     generated_at: str,
     generated_date: str,
     year: int,
+    popular_links: Optional[list] = None,
 ) -> Optional[dict]:
     items = client.search_items(
         article="genre",
@@ -385,7 +389,7 @@ def generate_genre_ranking_page(
 
     canonical_url = f"{settings.site_base_url}/ranking/genre/{entry.slug}.html"
     context = {
-        "page": {"ranked_items": items, "genre_name": entry.name, "genre_slug": entry.slug, "year": year},
+        "page": {"ranked_items": items, "genre_name": entry.name, "genre_slug": entry.slug, "year": year, "popular_links": popular_links or []},
         "canonical_url": canonical_url,
         "generated_at": generated_at,
         "generated_date": generated_date,
@@ -425,6 +429,7 @@ def generate_monthly_ranking_page(
     generated_date: str,
     year: int,
     month: int,
+    popular_links: Optional[list] = None,
 ) -> Optional[dict]:
     import calendar
     last_day = calendar.monthrange(year, month)[1]
@@ -445,7 +450,7 @@ def generate_monthly_ranking_page(
 
     canonical_url = f"{settings.site_base_url}/ranking/monthly/{slug}.html"
     context = {
-        "page": {"ranked_items": items, "year": year, "month": month_str},
+        "page": {"ranked_items": items, "year": year, "month": month_str, "popular_links": popular_links or []},
         "canonical_url": canonical_url,
         "generated_at": generated_at,
         "generated_date": generated_date,
@@ -523,6 +528,7 @@ def generate_sitemap(
     urls = [
         (f"{base}/", today),
         (f"{base}/actress/", today),
+        (f"{base}/genre/", today),
         (f"{base}/ranking-top10.html", today),
         (f"{base}/privacy.html", today),
         (f"{base}/contact.html", today),
@@ -579,6 +585,16 @@ def run(args: argparse.Namespace) -> int:
     generated_date = now.strftime("%Y年%m月%d日")
     today_iso = now.strftime("%Y-%m-%d")
     year = now.year
+    month_str = f"{now.month:02d}"
+
+    # Shared popular_links passed to every page template for sidebar
+    popular_links = [
+        {"url": "/ranking-top10.html", "title": f"FANZA総合ランキングTOP10【{year}年版】"},
+        {"url": f"/ranking/monthly/{year}-{month_str}.html", "title": f"{year}年{month_str}月 人気ランキングTOP10"},
+    ] + [
+        {"url": f"/ranking/genre/{g.slug}.html", "title": f"{g.name}おすすめTOP10【{year}年最新】"}
+        for g in genres_cfg[:4]
+    ]
 
     prev_manifest = _load_prev_manifest()
     prev_pages = {p["id"]: p for p in prev_manifest.get("actress_pages", []) if isinstance(p, dict) and p.get("id")}
@@ -592,7 +608,7 @@ def run(args: argparse.Namespace) -> int:
     actress_thumb_urls: dict[str, str] = {}  # populated after actress page generation
 
     # Generate ranking & top item
-    ranking_result = generate_ranking_page(client, settings, generated_at, generated_date, year)
+    ranking_result = generate_ranking_page(client, settings, generated_at, generated_date, year, popular_links=popular_links)
     if not ranking_result or ranking_result.get("status") != "ok":
         logger.error("ranking generation failed; aborting before any push")
         return 3
@@ -607,7 +623,7 @@ def run(args: argparse.Namespace) -> int:
     success_count = 0
     for entry in actresses_cfg:
         result = generate_actress_page(
-            client, entry, settings, actress_dtos, generated_at, generated_date, genre_slug_map
+            client, entry, settings, actress_dtos, generated_at, generated_date, genre_slug_map, popular_links=popular_links
         )
         if result:
             actress_results.append(result)
@@ -676,7 +692,7 @@ def run(args: argparse.Namespace) -> int:
     # Genre ranking pages (top 10 per genre)
     genre_ranking_results: list[dict] = []
     for genre_entry in genres_cfg:
-        gr = generate_genre_ranking_page(client, genre_entry, settings, generated_at, generated_date, year)
+        gr = generate_genre_ranking_page(client, genre_entry, settings, generated_at, generated_date, year, popular_links=popular_links)
         if gr:
             genre_ranking_results.append(gr)
     logger.info("GENRE RANKING: %d pages generated", sum(1 for r in genre_ranking_results if r.get("status") == "ok"))
@@ -686,7 +702,7 @@ def run(args: argparse.Namespace) -> int:
     for delta in range(3):
         target = now - timedelta(days=delta * 30)
         mr = generate_monthly_ranking_page(
-            client, settings, generated_at, generated_date, target.year, target.month
+            client, settings, generated_at, generated_date, target.year, target.month, popular_links=popular_links
         )
         if mr:
             monthly_ranking_results.append(mr)
@@ -760,8 +776,7 @@ def run(args: argparse.Namespace) -> int:
         for r in genre_results
         if r.get("status") == "ok" and r.get("url")
     ]
-    if genre_index_result and genre_index_result.get("status") == "ok":
-        genre_urls.insert(0, (genre_index_result["url"], today_iso))
+    # genre/ is already included in generate_sitemap's static URL list
     genre_ranking_urls = [
         (r["url"], today_iso)
         for r in genre_ranking_results

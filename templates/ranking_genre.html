@@ -161,7 +161,9 @@
       <div class="widget-title">人気記事</div>
       <div class="widget-body">
         <ul class="related-list popular-list">
-          <li><span class="rank rank-1">1</span><a href="/ranking-top10.html">FANZA総合ランキング</a></li>
+          {% for link in page.popular_links %}
+          <li><span class="rank rank-{{ loop.index }}">{{ loop.index }}</span><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {% endfor %}
         </ul>
       </div>
     </div>
