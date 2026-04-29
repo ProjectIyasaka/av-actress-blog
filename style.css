@@ -795,6 +795,41 @@ img { max-width: 100%; height: auto; }
   .btn-cta { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; }
 }
 
+/* ======= Related Actress Sidebar ======= */
+.related-actress-list { list-style: none; display: flex; flex-direction: column; gap: 8px; padding: 4px 0; }
+.related-actress-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--text);
+  padding: 6px 8px;
+  border-radius: var(--radius);
+  transition: background .15s;
+}
+.related-actress-item:hover { background: var(--bg3); color: var(--pink); }
+.related-actress-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+}
+.related-actress-img--placeholder {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.related-actress-name { font-size: 13px; font-weight: 500; line-height: 1.3; }
+
 /* ======= Above-fold CTA ======= */
 .cta-box--top {
   background: linear-gradient(135deg, #1a0a14 0%, #0e0e1a 100%);

@@ -162,9 +162,20 @@
     <div class="sidebar-widget">
       <div class="widget-title">他の人気女優</div>
       <div class="widget-body">
-        <ul class="related-list popular-list">
+        <ul class="related-actress-list">
           {% for related in page.related_actresses %}
-          <li><a href="/actress/{{ related.actress_id }}.html">{{ related.name }}</a></li>
+          <li>
+            <a href="/actress/{{ related.actress_id }}.html" class="related-actress-item">
+              {% if related.image_large %}
+              <img src="{{ related.image_large }}" alt="{{ related.name }}" loading="lazy" class="related-actress-img">
+              {% else %}
+              <div class="related-actress-img related-actress-img--placeholder" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" fill="currentColor"/></svg>
+              </div>
+              {% endif %}
+              <span class="related-actress-name">{{ related.name }}</span>
+            </a>
+          </li>
           {% endfor %}
         </ul>
       </div>
