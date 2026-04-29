@@ -1,0 +1,10 @@
+# Cloudflare Pages _redirects
+# https://developers.cloudflare.com/pages/configuration/redirects/
+
+# 旧ドメイン (av-actress-navi.pages.dev) からの301リダイレクトは
+# Cloudflare Pages ダッシュボード > Custom domains で設定すること
+
+# 末尾スラッシュなしのショートカット
+/ranking          /ranking-top10.html  301
+/actress          /actress/            301
+/genre            /genre/              301
