@@ -34,7 +34,7 @@
     {% if page.actresses %}
     <section id="actresses" style="margin-top:32px;">
       <h2 class="section-heading">注目のAV女優</h2>
-      <div class="post-grid">
+      <div class="post-grid" style="margin-bottom:16px;">
         {% for entry in page.actresses %}
         {% set actress = entry.dto %}
         <a href="/actress/{{ actress.actress_id }}.html" class="post-card">
@@ -52,6 +52,9 @@
           </div>
         </a>
         {% endfor %}
+      </div>
+      <div style="text-align:center; margin-top:8px;">
+        <a href="/actress/" class="btn-cta" style="display:inline-block;">全女優一覧を見る（{{ page.total_actresses }}人） →</a>
       </div>
     </section>
     {% endif %}

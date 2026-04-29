@@ -33,6 +33,7 @@ from scripts.config import (
 from scripts.dmm_client import ActressDTO, DMMClient, GenreDTO, ItemDTO
 from scripts.render import render
 from scripts.validate import (
+    validate_actress_index_page,
     validate_actress_page,
     validate_genre_index_page,
     validate_genre_page,
@@ -48,6 +49,7 @@ LOGS_DIR = ROOT / "logs"
 MANIFEST_PATH = ROOT / "manifest.json"
 
 ACTRESS_OUT_DIR = ROOT / "actress"
+ACTRESS_INDEX_OUT = ROOT / "actress" / "index.html"
 GENRE_OUT_DIR = ROOT / "genre"
 GENRE_INDEX_OUT = ROOT / "genre" / "index.html"
 RANKING_OUT = ROOT / "ranking-top10.html"
@@ -184,6 +186,36 @@ def generate_genre_page(
         "works_count": len(works),
         "thumb_url": thumb_url,
     }
+
+
+def generate_actress_index_page(
+    settings: Settings,
+    actresses: list[ActressDTO],
+    thumb_urls: dict[str, str],
+    generated_at: str,
+    generated_date: str,
+) -> Optional[dict]:
+    canonical_url = f"{settings.site_base_url}/actress/"
+    actress_view = [
+        {"dto": a, "thumb_url": thumb_urls.get(a.actress_id) or a.image_large}
+        for a in actresses
+    ]
+    context = {
+        "page": {"actresses": actress_view},
+        "canonical_url": canonical_url,
+        "generated_at": generated_at,
+        "generated_date": generated_date,
+    }
+    html = render("actress_index.html", context)
+    result = validate_actress_index_page(html)
+    if not result.ok:
+        logger.error("actress index: validation failed: %s", result.errors)
+        return {"status": "failed", "reason": ";".join(result.errors)}
+
+    tmp_path = TMP_BUILD / "actress" / "index.html"
+    tmp_path.write_text(html, encoding="utf-8")
+    _atomic_replace(tmp_path, ACTRESS_INDEX_OUT)
+    return {"status": "ok", "url": canonical_url}
 
 
 def generate_genre_index_page(
@@ -327,10 +359,10 @@ def generate_index_page(
 ) -> Optional[dict]:
     canonical_url = f"{settings.site_base_url}/"
     actress_view = []
-    for a in actresses[:8]:
+    for a in actresses[:12]:
         actress_view.append({"dto": a, "thumb_url": thumb_urls.get(a.actress_id) or a.image_large})
     context = {
-        "page": {"actresses": actress_view, "top_item": top_item, "year": year},
+        "page": {"actresses": actress_view, "top_item": top_item, "year": year, "total_actresses": len(actresses)},
         "canonical_url": canonical_url,
         "generated_at": generated_at,
         "generated_date": generated_date,
@@ -354,6 +386,7 @@ def generate_sitemap(
     base = settings.site_base_url
     urls = [
         (f"{base}/", today),
+        (f"{base}/actress/", today),
         (f"{base}/ranking-top10.html", today),
         (f"{base}/privacy.html", today),
         (f"{base}/contact.html", today),
@@ -474,6 +507,13 @@ def run(args: argparse.Namespace) -> int:
     if not index_result or index_result.get("status") != "ok":
         logger.error("index generation failed")
         return 5
+
+    # Generate actress index (full list)
+    actress_index_result = generate_actress_index_page(
+        settings, actress_dtos, actress_thumb_urls, generated_at, generated_date
+    )
+    if actress_index_result and actress_index_result.get("status") != "ok":
+        logger.error("actress index generation failed")
 
     # Generate genre pages
     genre_results: list[dict] = []

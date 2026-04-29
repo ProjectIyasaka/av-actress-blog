@@ -46,6 +46,17 @@ def validate_ranking_page(html: str, expected_min_items: int = 5) -> ValidationR
     return ValidationResult(ok=not errors, errors=errors)
 
 
+def validate_actress_index_page(html: str) -> ValidationResult:
+    errors: list[str] = []
+    if not TITLE_RE.search(html):
+        errors.append("missing <title>")
+    if not CANONICAL_RE.search(html):
+        errors.append("missing <link rel='canonical'>")
+    if "AUTO-GENERATED" not in html:
+        errors.append("missing AUTO-GENERATED marker")
+    return ValidationResult(ok=not errors, errors=errors)
+
+
 def validate_genre_index_page(html: str) -> ValidationResult:
     errors: list[str] = []
     if not TITLE_RE.search(html):
