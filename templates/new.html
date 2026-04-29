@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% set items = page.items %}
+{% set items = page.works %}
 {% block title %}{{ page.year }}年{{ page.month }}月 FANZA新着作品{{ items|length }}選｜毎日更新 | AV女優ナビ{% endblock %}
 {% block description %}FANZAの新着AV作品を毎日更新でお届け。{{ page.generated_date }}時点の最新{{ items|length }}作品を厳選。無料サンプル動画付きで紹介。{% endblock %}
 {% block og_type %}article{% endblock %}

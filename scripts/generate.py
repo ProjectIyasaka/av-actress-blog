@@ -509,7 +509,7 @@ def generate_new_page(
 
     canonical_url = f"{settings.site_base_url}/new/"
     context = {
-        "page": {"items": items, "year": year, "month": month_str, "generated_date": generated_date, "popular_links": popular_links or []},
+        "page": {"works": items, "year": year, "month": month_str, "generated_date": generated_date, "popular_links": popular_links or []},
         "canonical_url": canonical_url,
         "site_base_url": settings.site_base_url,
         "generated_at": generated_at,

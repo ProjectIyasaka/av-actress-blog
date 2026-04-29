@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-04-29 17:52:31 +0900",
-  "last_successful_run": "2026-04-29 17:52:31 +0900",
+  "generated_at": "2026-04-29 19:01:22 +0900",
+  "last_successful_run": "2026-04-29 19:01:22 +0900",
   "consecutive_failures": 0,
   "stats": {
     "total_actress_pages": 292,
@@ -3062,6 +3062,12 @@
     "url": "https://fanza-actress.com/ranking-top10.html",
     "hash": "e12f18db07df32fb",
     "items_count": 10
+  },
+  "new_page": {
+    "status": "ok",
+    "url": "https://fanza-actress.com/new/",
+    "hash": "d0e94ff10081b975",
+    "items_count": 30
   },
   "index": {
     "status": "ok",
