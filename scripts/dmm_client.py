@@ -37,6 +37,7 @@ class ItemDTO:
     release_date: Optional[str] = None
     description: Optional[str] = None
     genre_names: list[str] = field(default_factory=list)
+    actress_count: int = 0
 
 
 @dataclass
@@ -234,6 +235,7 @@ class DMMClient:
         )
         iteminfo = raw.get("iteminfo") or {}
         genres = [g.get("name", "") for g in (iteminfo.get("genre") or []) if g.get("name")]
+        actress_count = len(iteminfo.get("actress") or [])
         prices = raw.get("prices") or {}
         price = prices.get("price") or raw.get("price")
         return ItemDTO(
@@ -247,6 +249,7 @@ class DMMClient:
             release_date=raw.get("date") or raw.get("release_date"),
             description=raw.get("description"),
             genre_names=genres,
+            actress_count=actress_count,
         )
 
     @staticmethod

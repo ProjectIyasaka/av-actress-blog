@@ -307,6 +307,11 @@ def generate_actress_page(
     final_path = ACTRESS_OUT_DIR / f"{entry.id}.html"
     _atomic_replace(tmp_path, final_path)
 
+    # Pick best thumbnail: prefer solo/duo works (actress_count <= 2) over compilations
+    solo_works = [w for w in works if w.actress_count <= 2 and w.image_large]
+    thumb_work = solo_works[0] if solo_works else next((w for w in works if w.image_large), None)
+    thumb_url = thumb_work.image_large if thumb_work else actress.image_large
+
     page_hash = _content_hash(asdict(actress), [asdict(w) for w in works])
     return {
         "id": entry.id,
@@ -315,6 +320,7 @@ def generate_actress_page(
         "url": canonical_url,
         "hash": page_hash,
         "works_count": len(works),
+        "thumb_url": thumb_url,
     }
 
 
@@ -447,20 +453,13 @@ def run(args: argparse.Namespace) -> int:
     prev_manifest = _load_prev_manifest()
     prev_pages = {p["id"]: p for p in prev_manifest.get("actress_pages", []) if isinstance(p, dict) and p.get("id")}
 
-    # Pre-fetch actress DTOs for "related actresses" sidebar
+    # Pre-fetch actress DTOs for "related actresses" sidebar (no thumb here — built after page gen)
     actress_dtos: list[ActressDTO] = []
-    actress_thumb_urls: dict[str, str] = {}  # actress_id -> work cover image (hi-res)
     for entry in actresses_cfg:
         a = client.get_actress_by_id(entry.id)
         if a:
             actress_dtos.append(a)
-            # Use rank-sorted work images (high-res covers) instead of profile images (120px thumbnails)
-            # sort=rank avoids shared compilation covers that appear as latest works
-            ranked = client.search_items(article="actress", article_id=entry.id, sort="rank", hits=1)
-            if ranked and ranked[0].image_large:
-                actress_thumb_urls[entry.id] = ranked[0].image_large
-            elif a.image_large:
-                actress_thumb_urls[entry.id] = a.image_large
+    actress_thumb_urls: dict[str, str] = {}  # populated after actress page generation
 
     # Generate ranking & top item
     ranking_result = generate_ranking_page(client, settings, generated_at, generated_date, year)
@@ -484,6 +483,20 @@ def run(args: argparse.Namespace) -> int:
             actress_results.append(result)
             if result.get("status") == "ok":
                 success_count += 1
+
+    # Build thumb URLs from generated actress pages (solo/duo work covers, not compilation images)
+    for r in actress_results:
+        if r.get("status") == "ok" and r.get("thumb_url"):
+            actress_thumb_urls[r["id"]] = r["thumb_url"]
+
+    # Deduplicate: if two actresses share the same thumb, fall back to profile image
+    url_counts: dict[str, int] = {}
+    for url in actress_thumb_urls.values():
+        url_counts[url] = url_counts.get(url, 0) + 1
+    dto_map = {a.actress_id: a for a in actress_dtos}
+    for aid, url in list(actress_thumb_urls.items()):
+        if url_counts[url] > 1 and dto_map.get(aid) and dto_map[aid].image_large:
+            actress_thumb_urls[aid] = dto_map[aid].image_large
 
     # Anomaly detection: drop >20% from previous run, or <50% of configured actresses on first run
     prev_ok = sum(1 for p in prev_pages.values() if p.get("status") == "ok")
