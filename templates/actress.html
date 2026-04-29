@@ -16,14 +16,14 @@
       "headline": "{{ actress.name }}のプロフィール・出演作品{{ works|length }}選",
       "datePublished": "{{ generated_at[:10] }}",
       "dateModified": "{{ generated_at[:10] }}",
-      "publisher": {"@type": "Organization", "name": "AV女優ナビ", "url": "https://av-actress-navi.pages.dev"},
+      "publisher": {"@type": "Organization", "name": "AV女優ナビ", "url": "{{ site_base_url }}"},
       "url": "{{ canonical_url }}"{% if actress.image_large %},
       "image": "{{ actress.image_large }}"{% endif %}
     },
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        {"@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://av-actress-navi.pages.dev/"},
+        {"@type": "ListItem", "position": 1, "name": "ホーム", "item": "{{ site_base_url }}/"},
         {"@type": "ListItem", "position": 2, "name": "{{ actress.name }}", "item": "{{ canonical_url }}"}
       ]
     }

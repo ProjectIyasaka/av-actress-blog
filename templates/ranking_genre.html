@@ -15,15 +15,15 @@
       "headline": "【{{ page.year }}年最新】{{ page.genre_name }}おすすめ作品TOP{{ items|length }}",
       "datePublished": "{{ generated_at[:10] }}",
       "dateModified": "{{ generated_at[:10] }}",
-      "publisher": {"@type": "Organization", "name": "AV女優ナビ", "url": "https://av-actress-navi.pages.dev"},
+      "publisher": {"@type": "Organization", "name": "AV女優ナビ", "url": "{{ site_base_url }}"},
       "url": "{{ canonical_url }}"{% if items and items[0].image_large %},
       "image": "{{ items[0].image_large }}"{% endif %}
     },
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        {"@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://av-actress-navi.pages.dev/"},
-        {"@type": "ListItem", "position": 2, "name": "ランキング", "item": "https://av-actress-navi.pages.dev/ranking-top10.html"},
+        {"@type": "ListItem", "position": 1, "name": "ホーム", "item": "{{ site_base_url }}/"},
+        {"@type": "ListItem", "position": 2, "name": "ランキング", "item": "{{ site_base_url }}/ranking-top10.html"},
         {"@type": "ListItem", "position": 3, "name": "{{ page.genre_name }}", "item": "{{ canonical_url }}"}
       ]
     }

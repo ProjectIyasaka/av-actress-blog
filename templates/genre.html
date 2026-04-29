@@ -16,15 +16,15 @@
       "headline": "{{ genre.name }}のおすすめAV・人気作品{{ works|length }}選",
       "datePublished": "{{ generated_at[:10] }}",
       "dateModified": "{{ generated_at[:10] }}",
-      "publisher": {"@type": "Organization", "name": "AV女優ナビ", "url": "https://av-actress-navi.pages.dev"},
+      "publisher": {"@type": "Organization", "name": "AV女優ナビ", "url": "{{ site_base_url }}"},
       "url": "{{ canonical_url }}"{% if works and works[0].image_large %},
       "image": "{{ works[0].image_large }}"{% endif %}
     },
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        {"@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://av-actress-navi.pages.dev/"},
-        {"@type": "ListItem", "position": 2, "name": "ジャンル一覧", "item": "https://av-actress-navi.pages.dev/genre/"},
+        {"@type": "ListItem", "position": 1, "name": "ホーム", "item": "{{ site_base_url }}/"},
+        {"@type": "ListItem", "position": 2, "name": "ジャンル一覧", "item": "{{ site_base_url }}/genre/"},
         {"@type": "ListItem", "position": 3, "name": "{{ genre.name }}", "item": "{{ canonical_url }}"}
       ]
     }

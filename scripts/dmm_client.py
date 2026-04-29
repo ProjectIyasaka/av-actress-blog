@@ -229,6 +229,11 @@ class DMMClient:
         results = self.search_actresses(actress_id=actress_id, hits=1)
         return results[0] if results else None
 
+    def fetch_raw_item_page(self, params: dict[str, Any]) -> list[dict]:
+        """Return raw item dicts including iteminfo. Used by bootstrap to extract actress IDs."""
+        data = self._request("ItemList", params)
+        return data.get("result", {}).get("items", []) or []
+
     @staticmethod
     def _normalize_item(raw: dict) -> ItemDTO:
         image = raw.get("imageURL") or raw.get("image") or {}

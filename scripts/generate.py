@@ -115,8 +115,7 @@ def _bootstrap_actresses(client: DMMClient, n: int) -> list[ActressEntry]:
             "hits": 100,
             "offset": offset,
         }
-        data = client._request("ItemList", params)  # noqa: SLF001 — internal use
-        items = data.get("result", {}).get("items", []) or []
+        items = client.fetch_raw_item_page(params)
         if not items:
             break
         for item in items:
@@ -167,6 +166,7 @@ def generate_genre_page(
     context = {
         "page": {"genre": entry, "works": works},
         "canonical_url": canonical_url,
+        "site_base_url": settings.site_base_url,
         "generated_at": generated_at,
         "generated_date": generated_date,
     }
@@ -210,6 +210,7 @@ def generate_actress_index_page(
     context = {
         "page": {"actresses": actress_view},
         "canonical_url": canonical_url,
+        "site_base_url": settings.site_base_url,
         "generated_at": generated_at,
         "generated_date": generated_date,
     }
@@ -236,7 +237,7 @@ def generate_genre_index_page(
     ok_results = {r["id"]: r for r in genre_results if r.get("status") == "ok"}
     genres_view = []
     for entry in genres_cfg:
-        r = ok_results.get(entry.slug)
+        r = ok_results.get(entry.genre_id)
         if not r:
             continue
         genres_view.append({
@@ -249,6 +250,7 @@ def generate_genre_index_page(
     context = {
         "page": {"genres": genres_view},
         "canonical_url": canonical_url,
+        "site_base_url": settings.site_base_url,
         "generated_at": generated_at,
         "generated_date": generated_date,
     }
@@ -273,9 +275,10 @@ def generate_actress_page(
     generated_date: str,
     genre_slug_map: Optional[dict] = None,
     popular_links: Optional[list] = None,
+    actress_dto: Optional[ActressDTO] = None,
 ) -> Optional[dict]:
     """Returns manifest entry on success, None on skip."""
-    actress = client.get_actress_by_id(entry.id)
+    actress = actress_dto or client.get_actress_by_id(entry.id)
     if not actress:
         logger.warning("actress %s: not found, skip", entry.id)
         return {"id": entry.id, "status": "skipped", "reason": "not_found"}
@@ -302,6 +305,7 @@ def generate_actress_page(
             "popular_links": popular_links or [],
         },
         "canonical_url": canonical_url,
+        "site_base_url": settings.site_base_url,
         "generated_at": generated_at,
         "generated_date": generated_date,
     }
@@ -352,6 +356,7 @@ def generate_ranking_page(
     context = {
         "page": {"ranked_items": items, "year": year, "popular_links": popular_links or []},
         "canonical_url": canonical_url,
+        "site_base_url": settings.site_base_url,
         "generated_at": generated_at,
         "generated_date": generated_date,
     }
@@ -391,6 +396,7 @@ def generate_genre_ranking_page(
     context = {
         "page": {"ranked_items": items, "genre_name": entry.name, "genre_slug": entry.slug, "year": year, "popular_links": popular_links or []},
         "canonical_url": canonical_url,
+        "site_base_url": settings.site_base_url,
         "generated_at": generated_at,
         "generated_date": generated_date,
     }
@@ -452,6 +458,7 @@ def generate_monthly_ranking_page(
     context = {
         "page": {"ranked_items": items, "year": year, "month": month_str, "popular_links": popular_links or []},
         "canonical_url": canonical_url,
+        "site_base_url": settings.site_base_url,
         "generated_at": generated_at,
         "generated_date": generated_date,
     }
@@ -505,6 +512,7 @@ def generate_index_page(
             "summary_cards": summary_cards or [],
         },
         "canonical_url": canonical_url,
+        "site_base_url": settings.site_base_url,
         "generated_at": generated_at,
         "generated_date": generated_date,
     }
@@ -599,12 +607,14 @@ def run(args: argparse.Namespace) -> int:
     prev_manifest = _load_prev_manifest()
     prev_pages = {p["id"]: p for p in prev_manifest.get("actress_pages", []) if isinstance(p, dict) and p.get("id")}
 
-    # Pre-fetch actress DTOs for "related actresses" sidebar (no thumb here — built after page gen)
+    # Pre-fetch actress DTOs for "related actresses" sidebar and to avoid duplicate API calls per page
     actress_dtos: list[ActressDTO] = []
+    actress_dto_map: dict[str, ActressDTO] = {}
     for entry in actresses_cfg:
         a = client.get_actress_by_id(entry.id)
         if a:
             actress_dtos.append(a)
+            actress_dto_map[entry.id] = a
     actress_thumb_urls: dict[str, str] = {}  # populated after actress page generation
 
     # Generate ranking & top item
@@ -623,7 +633,8 @@ def run(args: argparse.Namespace) -> int:
     success_count = 0
     for entry in actresses_cfg:
         result = generate_actress_page(
-            client, entry, settings, actress_dtos, generated_at, generated_date, genre_slug_map, popular_links=popular_links
+            client, entry, settings, actress_dtos, generated_at, generated_date, genre_slug_map,
+            popular_links=popular_links, actress_dto=actress_dto_map.get(entry.id),
         )
         if result:
             actress_results.append(result)
@@ -700,9 +711,10 @@ def run(args: argparse.Namespace) -> int:
     # Monthly ranking pages (current month + past 2 months)
     monthly_ranking_results: list[dict] = []
     for delta in range(3):
-        target = now - timedelta(days=delta * 30)
+        target_month = (now.month - delta - 1) % 12 + 1
+        target_year = now.year - ((now.month - delta - 1) // 12)
         mr = generate_monthly_ranking_page(
-            client, settings, generated_at, generated_date, target.year, target.month, popular_links=popular_links
+            client, settings, generated_at, generated_date, target_year, target_month, popular_links=popular_links
         )
         if mr:
             monthly_ranking_results.append(mr)
