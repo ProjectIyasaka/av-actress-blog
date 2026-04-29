@@ -88,9 +88,9 @@
         {% if item.sample_video_url %}
         <div class="video-embed-box">
           <span class="video-label">▶ 無料サンプル動画</span>
-          <video controls preload="none" style="width:100%; max-width:640px; display:block; margin:0 auto;" {% if item.image_large %}poster="{{ item.image_large }}"{% endif %}>
-            <source src="{{ item.sample_video_url }}" type="video/mp4">
-          </video>
+          <div style="position:relative; width:100%; max-width:640px; margin:0 auto; aspect-ratio:4/3; background:#000;">
+            <iframe src="{{ item.sample_video_url }}" style="width:100%; height:100%; border:none; display:block;" allowfullscreen loading="lazy" title="{{ item.title }} サンプル動画"></iframe>
+          </div>
         </div>
         {% endif %}
 
