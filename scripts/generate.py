@@ -232,6 +232,7 @@ def generate_actress_page(
     related_actresses: list[ActressDTO],
     generated_at: str,
     generated_date: str,
+    genre_slug_map: Optional[dict] = None,
 ) -> Optional[dict]:
     """Returns manifest entry on success, None on skip."""
     actress = client.get_actress_by_id(entry.id)
@@ -257,6 +258,7 @@ def generate_actress_page(
             "actress": actress,
             "works": works,
             "related_actresses": [a for a in related_actresses if a.actress_id != entry.id][:5],
+            "genre_slug_map": genre_slug_map or {},
         },
         "canonical_url": canonical_url,
         "generated_at": generated_at,
@@ -400,6 +402,9 @@ def run(args: argparse.Namespace) -> int:
     if args.limit_actresses:
         actresses_cfg = actresses_cfg[: args.limit_actresses]
 
+    genres_cfg = load_genres()
+    genre_slug_map = {g.name: g.slug for g in genres_cfg}
+
     now = datetime.now(JST)
     generated_at = now.strftime("%Y-%m-%d %H:%M:%S %z")
     generated_date = now.strftime("%Y年%m月%d日")
@@ -436,7 +441,7 @@ def run(args: argparse.Namespace) -> int:
     success_count = 0
     for entry in actresses_cfg:
         result = generate_actress_page(
-            client, entry, settings, actress_dtos, generated_at, generated_date
+            client, entry, settings, actress_dtos, generated_at, generated_date, genre_slug_map
         )
         if result:
             actress_results.append(result)
@@ -471,7 +476,6 @@ def run(args: argparse.Namespace) -> int:
         return 5
 
     # Generate genre pages
-    genres_cfg = load_genres()
     genre_results: list[dict] = []
     genre_success_count = 0
     for genre_entry in genres_cfg:

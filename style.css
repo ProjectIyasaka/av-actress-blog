@@ -795,6 +795,30 @@ img { max-width: 100%; height: auto; }
   .btn-cta { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; }
 }
 
+/* ======= Above-fold CTA ======= */
+.cta-box--top {
+  background: linear-gradient(135deg, #1a0a14 0%, #0e0e1a 100%);
+  border: 1px solid var(--pink);
+  border-radius: var(--radius);
+  padding: 18px;
+  text-align: center;
+  margin: 20px 0;
+}
+
+/* ======= Work Tags ======= */
+.work-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
+.work-tag {
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 10px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  text-decoration: none;
+  white-space: nowrap;
+}
+a.work-tag:hover { border-color: var(--pink); color: var(--pink); }
+
 /* ======= Genre Grid ======= */
 .genre-grid {
   display: grid;
