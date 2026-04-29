@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-04-29 11:38:01 +0900",
-  "last_successful_run": "2026-04-29 11:38:01 +0900",
+  "generated_at": "2026-04-29 11:41:24 +0900",
+  "last_successful_run": "2026-04-29 11:41:24 +0900",
   "consecutive_failures": 0,
   "stats": {
     "total_actress_pages": 50,
@@ -417,7 +417,8 @@
       "status": "ok",
       "url": "https://av-actress-navi.pages.dev/genre/4025.html",
       "hash": "0aeb7283b03bdc13",
-      "works_count": 12
+      "works_count": 12,
+      "thumb_url": "https://pics.dmm.co.jp/digital/video/snos00131/snos00131pl.jpg"
     },
     {
       "id": "1027",
@@ -426,7 +427,8 @@
       "status": "ok",
       "url": "https://av-actress-navi.pages.dev/genre/1027.html",
       "hash": "886111428949f2d4",
-      "works_count": 12
+      "works_count": 12,
+      "thumb_url": "https://pics.dmm.co.jp/digital/video/snos00131/snos00131pl.jpg"
     },
     {
       "id": "2001",
@@ -435,7 +437,8 @@
       "status": "ok",
       "url": "https://av-actress-navi.pages.dev/genre/2001.html",
       "hash": "d138d8d08a6232cd",
-      "works_count": 12
+      "works_count": 12,
+      "thumb_url": "https://pics.dmm.co.jp/digital/video/snos00038/snos00038pl.jpg"
     },
     {
       "id": "5001",
@@ -444,7 +447,8 @@
       "status": "ok",
       "url": "https://av-actress-navi.pages.dev/genre/5001.html",
       "hash": "371981736e4c9eca",
-      "works_count": 12
+      "works_count": 12,
+      "thumb_url": "https://pics.dmm.co.jp/digital/video/nqtd00021/nqtd00021pl.jpg"
     },
     {
       "id": "1031",
@@ -453,7 +457,8 @@
       "status": "ok",
       "url": "https://av-actress-navi.pages.dev/genre/1031.html",
       "hash": "9e9b3ce899ed5f05",
-      "works_count": 12
+      "works_count": 12,
+      "thumb_url": "https://pics.dmm.co.jp/digital/video/13dsvr01668/13dsvr01668pl.jpg"
     },
     {
       "id": "5002",
@@ -462,7 +467,8 @@
       "status": "ok",
       "url": "https://av-actress-navi.pages.dev/genre/5002.html",
       "hash": "f5e4f2a7bae7fd09",
-      "works_count": 12
+      "works_count": 12,
+      "thumb_url": "https://pics.dmm.co.jp/digital/video/mida00493/mida00493pl.jpg"
     },
     {
       "id": "2006",
@@ -471,7 +477,8 @@
       "status": "ok",
       "url": "https://av-actress-navi.pages.dev/genre/2006.html",
       "hash": "0b8a65ea1662cdf5",
-      "works_count": 12
+      "works_count": 12,
+      "thumb_url": "https://pics.dmm.co.jp/digital/video/snos00038/snos00038pl.jpg"
     },
     {
       "id": "4005",
@@ -480,7 +487,8 @@
       "status": "ok",
       "url": "https://av-actress-navi.pages.dev/genre/4005.html",
       "hash": "ddc0d878647379fe",
-      "works_count": 12
+      "works_count": 12,
+      "thumb_url": "https://pics.dmm.co.jp/digital/video/mird00277/mird00277pl.jpg"
     },
     {
       "id": "4030",
@@ -489,7 +497,8 @@
       "status": "ok",
       "url": "https://av-actress-navi.pages.dev/genre/4030.html",
       "hash": "63fb0e8e0d2eda90",
-      "works_count": 12
+      "works_count": 12,
+      "thumb_url": "https://pics.dmm.co.jp/digital/video/snos00131/snos00131pl.jpg"
     },
     {
       "id": "4106",
@@ -498,7 +507,8 @@
       "status": "ok",
       "url": "https://av-actress-navi.pages.dev/genre/4106.html",
       "hash": "7b4484427c5fdcf5",
-      "works_count": 12
+      "works_count": 12,
+      "thumb_url": "https://pics.dmm.co.jp/digital/video/sone00642/sone00642pl.jpg"
     }
   ],
   "ranking": {

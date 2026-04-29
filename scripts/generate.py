@@ -34,6 +34,7 @@ from scripts.dmm_client import ActressDTO, DMMClient, GenreDTO, ItemDTO
 from scripts.render import render
 from scripts.validate import (
     validate_actress_page,
+    validate_genre_index_page,
     validate_genre_page,
     validate_index_page,
     validate_ranking_page,
@@ -48,6 +49,7 @@ MANIFEST_PATH = ROOT / "manifest.json"
 
 ACTRESS_OUT_DIR = ROOT / "actress"
 GENRE_OUT_DIR = ROOT / "genre"
+GENRE_INDEX_OUT = ROOT / "genre" / "index.html"
 RANKING_OUT = ROOT / "ranking-top10.html"
 INDEX_OUT = ROOT / "index.html"
 SITEMAP_OUT = ROOT / "sitemap.xml"
@@ -171,6 +173,7 @@ def generate_genre_page(
     _atomic_replace(tmp_path, final_path)
 
     page_hash = _content_hash(entry.genre_id, [asdict(w) for w in works])
+    thumb_url = next((w.image_large for w in works if w.image_large), None)
     return {
         "id": entry.genre_id,
         "slug": entry.slug,
@@ -179,7 +182,47 @@ def generate_genre_page(
         "url": canonical_url,
         "hash": page_hash,
         "works_count": len(works),
+        "thumb_url": thumb_url,
     }
+
+
+def generate_genre_index_page(
+    settings: Settings,
+    genre_results: list[dict],
+    genres_cfg: list[GenreEntry],
+    generated_at: str,
+    generated_date: str,
+) -> Optional[dict]:
+    canonical_url = f"{settings.site_base_url}/genre/"
+    ok_results = {r["id"]: r for r in genre_results if r.get("status") == "ok"}
+    genres_view = []
+    for entry in genres_cfg:
+        r = ok_results.get(entry.slug)
+        if not r:
+            continue
+        genres_view.append({
+            "slug": entry.slug,
+            "name": entry.name,
+            "description": entry.description,
+            "works_count": r.get("works_count", 0),
+            "thumb_url": r.get("thumb_url"),
+        })
+    context = {
+        "page": {"genres": genres_view},
+        "canonical_url": canonical_url,
+        "generated_at": generated_at,
+        "generated_date": generated_date,
+    }
+    html = render("genre_index.html", context)
+    result = validate_genre_index_page(html)
+    if not result.ok:
+        logger.error("genre index: validation failed: %s", result.errors)
+        return {"status": "failed", "reason": ";".join(result.errors)}
+
+    tmp_path = TMP_BUILD / "genre" / "index.html"
+    tmp_path.write_text(html, encoding="utf-8")
+    _atomic_replace(tmp_path, GENRE_INDEX_OUT)
+    return {"status": "ok", "url": canonical_url}
 
 
 def generate_actress_page(
@@ -440,6 +483,13 @@ def run(args: argparse.Namespace) -> int:
     if genre_success_count:
         logger.info("GENRE: %d genre pages generated", genre_success_count)
 
+    # Genre index page
+    genre_index_result = generate_genre_index_page(
+        settings, genre_results, genres_cfg, generated_at, generated_date
+    )
+    if genre_index_result and genre_index_result.get("status") != "ok":
+        logger.error("genre index generation failed")
+
     # Sitemap
     actress_urls = [
         (r["url"], today_iso)
@@ -451,6 +501,8 @@ def run(args: argparse.Namespace) -> int:
         for r in genre_results
         if r.get("status") == "ok" and r.get("url")
     ]
+    if genre_index_result and genre_index_result.get("status") == "ok":
+        genre_urls.insert(0, (genre_index_result["url"], today_iso))
     generate_sitemap(settings, actress_urls + genre_urls, today_iso)
 
     # Manifest
