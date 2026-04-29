@@ -32,7 +32,7 @@ if %GEN_EXIT% neq 0 (
 )
 
 REM Stage only generation outputs (whitelist)
-git add actress\ genre\ ranking\ index.html ranking-top10.html sitemap.xml manifest.json 2>> %LOGFILE%
+git add actress\ genre\ ranking\ new\ index.html ranking-top10.html sitemap.xml manifest.json 2>> %LOGFILE%
 
 REM Commit only if there are staged changes
 git diff --cached --quiet

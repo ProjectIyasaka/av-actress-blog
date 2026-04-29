@@ -38,6 +38,7 @@ from scripts.validate import (
     validate_genre_index_page,
     validate_genre_page,
     validate_index_page,
+    validate_new_page,
     validate_ranking_page,
 )
 
@@ -55,6 +56,8 @@ GENRE_INDEX_OUT = ROOT / "genre" / "index.html"
 RANKING_OUT = ROOT / "ranking-top10.html"
 GENRE_RANKING_OUT_DIR = ROOT / "ranking" / "genre"
 MONTHLY_RANKING_OUT_DIR = ROOT / "ranking" / "monthly"
+NEW_OUT_DIR = ROOT / "new"
+NEW_OUT = ROOT / "new" / "index.html"
 INDEX_OUT = ROOT / "index.html"
 SITEMAP_OUT = ROOT / "sitemap.xml"
 
@@ -69,8 +72,9 @@ def _ensure_dirs() -> None:
     for d in (
         TMP_BUILD, TMP_BUILD / "actress", TMP_BUILD / "genre",
         TMP_BUILD / "ranking" / "genre", TMP_BUILD / "ranking" / "monthly",
+        TMP_BUILD / "new",
         LOGS_DIR, ACTRESS_OUT_DIR, GENRE_OUT_DIR,
-        GENRE_RANKING_OUT_DIR, MONTHLY_RANKING_OUT_DIR,
+        GENRE_RANKING_OUT_DIR, MONTHLY_RANKING_OUT_DIR, NEW_OUT_DIR,
     ):
         d.mkdir(parents=True, exist_ok=True)
 
@@ -489,6 +493,42 @@ def generate_monthly_ranking_page(
     }
 
 
+def generate_new_page(
+    client: DMMClient,
+    settings: Settings,
+    generated_at: str,
+    generated_date: str,
+    year: int,
+    month_str: str,
+    popular_links: Optional[list] = None,
+) -> Optional[dict]:
+    items = client.search_items(sort="-date", hits=30)
+    if len(items) < 5:
+        logger.warning("new page: only %d items fetched, skip", len(items))
+        return {"status": "skipped", "reason": "insufficient_items"}
+
+    canonical_url = f"{settings.site_base_url}/new/"
+    context = {
+        "page": {"items": items, "year": year, "month": month_str, "generated_date": generated_date, "popular_links": popular_links or []},
+        "canonical_url": canonical_url,
+        "site_base_url": settings.site_base_url,
+        "generated_at": generated_at,
+        "generated_date": generated_date,
+    }
+    html = render("new.html", context)
+    result = validate_new_page(html)
+    if not result.ok:
+        logger.error("new page: validation failed: %s", result.errors)
+        return {"status": "failed", "reason": ";".join(result.errors)}
+
+    tmp_path = TMP_BUILD / "new" / "index.html"
+    tmp_path.write_text(html, encoding="utf-8")
+    _atomic_replace(tmp_path, NEW_OUT)
+
+    page_hash = _content_hash([asdict(i) for i in items])
+    return {"status": "ok", "url": canonical_url, "hash": page_hash, "items_count": len(items)}
+
+
 def generate_index_page(
     settings: Settings,
     actresses: list[ActressDTO],
@@ -535,6 +575,7 @@ def generate_sitemap(
     base = settings.site_base_url
     urls = [
         (f"{base}/", today),
+        (f"{base}/new/", today),
         (f"{base}/actress/", today),
         (f"{base}/genre/", today),
         (f"{base}/ranking-top10.html", today),
@@ -727,6 +768,13 @@ def run(args: argparse.Namespace) -> int:
     monthly_ranking_results = deduped_monthly
     logger.info("MONTHLY RANKING: %d pages generated", sum(1 for r in monthly_ranking_results if r.get("status") == "ok"))
 
+    # New releases page (daily updated)
+    new_result = generate_new_page(client, settings, generated_at, generated_date, year, month_str, popular_links=popular_links)
+    if new_result and new_result.get("status") == "ok":
+        logger.info("NEW PAGE: %d items", new_result.get("items_count", 0))
+    else:
+        logger.warning("NEW PAGE: generation failed or skipped")
+
     # Build summary cards for index page (monthly + top genre rankings)
     # thumb_url dedup: avoid showing the same cover image in multiple cards
     # Seed with top_item image so the hardcoded first card doesn't clash
@@ -818,6 +866,7 @@ def run(args: argparse.Namespace) -> int:
         "genre_ranking_pages": genre_ranking_results,
         "monthly_ranking_pages": monthly_ranking_results,
         "ranking": ranking_result,
+        "new_page": new_result,
         "index": index_result,
         "generator_version": "0.1.0",
     }
