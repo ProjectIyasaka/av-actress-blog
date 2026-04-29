@@ -696,27 +696,41 @@ def run(args: argparse.Namespace) -> int:
     logger.info("MONTHLY RANKING: %d pages generated", sum(1 for r in monthly_ranking_results if r.get("status") == "ok"))
 
     # Build summary cards for index page (monthly + top genre rankings)
+    # thumb_url dedup: avoid showing the same cover image in multiple cards
+    used_thumbs: set[str] = set()
     summary_cards: list[dict] = []
+
     for r in monthly_ranking_results[:1]:
         if r.get("status") == "ok":
+            thumb = r.get("thumb_url")
+            if thumb:
+                used_thumbs.add(thumb)
             summary_cards.append({
                 "url": f"/ranking/monthly/{r['slug']}.html",
-                "thumb_url": r.get("thumb_url"),
+                "thumb_url": thumb,
                 "category": "月別ランキング",
                 "title": f"【{r['year']}年{r['month']}月】FANZA人気ランキングTOP10",
                 "excerpt": f"{r['year']}年{r['month']}月にリリースされた作品の人気TOP10を厳選。",
                 "date": generated_date,
             })
-    for r in genre_ranking_results[:4]:
-        if r.get("status") == "ok":
-            summary_cards.append({
-                "url": f"/ranking/genre/{r['slug']}.html",
-                "thumb_url": r.get("thumb_url"),
-                "category": "ジャンル別ランキング",
-                "title": f"【{r.get('year', year)}年最新】{r['name']}おすすめTOP10",
-                "excerpt": f"FANZA {r['name']}部門の人気ランキングTOP10。無料サンプル動画付き。",
-                "date": generated_date,
-            })
+    for r in genre_ranking_results:
+        if r.get("status") != "ok":
+            continue
+        thumb = r.get("thumb_url")
+        if thumb and thumb in used_thumbs:
+            continue
+        if thumb:
+            used_thumbs.add(thumb)
+        summary_cards.append({
+            "url": f"/ranking/genre/{r['slug']}.html",
+            "thumb_url": thumb,
+            "category": "ジャンル別ランキング",
+            "title": f"【{r.get('year', year)}年最新】{r['name']}おすすめTOP10",
+            "excerpt": f"FANZA {r['name']}部門の人気ランキングTOP10。無料サンプル動画付き。",
+            "date": generated_date,
+        })
+        if len(summary_cards) >= 5:
+            break
 
     # Generate index (after rankings so summary_cards are available)
     index_result = generate_index_page(
