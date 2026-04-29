@@ -449,14 +449,19 @@ def run(args: argparse.Namespace) -> int:
 
     # Pre-fetch actress DTOs for "related actresses" sidebar
     actress_dtos: list[ActressDTO] = []
-    actress_thumb_urls: dict[str, str] = {}  # actress_id -> latest work image (hi-res)
+    actress_thumb_urls: dict[str, str] = {}  # actress_id -> profile image (hi-res)
     for entry in actresses_cfg:
         a = client.get_actress_by_id(entry.id)
         if a:
             actress_dtos.append(a)
-            latest = client.search_items(article="actress", article_id=entry.id, sort="-date", hits=1)
-            if latest and latest[0].image_large:
-                actress_thumb_urls[entry.id] = latest[0].image_large
+            # Prefer actress profile image to avoid duplicate thumbnails from multi-actress works
+            thumb = a.image_large or a.image_small
+            if not thumb:
+                latest = client.search_items(article="actress", article_id=entry.id, sort="-date", hits=1)
+                if latest and latest[0].image_large:
+                    thumb = latest[0].image_large
+            if thumb:
+                actress_thumb_urls[entry.id] = thumb
 
     # Generate ranking & top item
     ranking_result = generate_ranking_page(client, settings, generated_at, generated_date, year)
