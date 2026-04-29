@@ -307,10 +307,14 @@ def generate_actress_page(
     final_path = ACTRESS_OUT_DIR / f"{entry.id}.html"
     _atomic_replace(tmp_path, final_path)
 
-    # Pick best thumbnail: prefer solo/duo works (actress_count <= 2) over compilations
+    # Pick best thumbnail: solo/duo work cover → actress profile image → any work cover
     solo_works = [w for w in works if w.actress_count <= 2 and w.image_large]
-    thumb_work = solo_works[0] if solo_works else next((w for w in works if w.image_large), None)
-    thumb_url = thumb_work.image_large if thumb_work else actress.image_large
+    if solo_works:
+        thumb_url = solo_works[0].image_large
+    elif actress.image_large:
+        thumb_url = actress.image_large  # avoid compilation covers if no solo work found
+    else:
+        thumb_url = next((w.image_large for w in works if w.image_large), None)
 
     page_hash = _content_hash(asdict(actress), [asdict(w) for w in works])
     return {

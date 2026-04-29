@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-04-29 12:13:20 +0900",
-  "last_successful_run": "2026-04-29 12:13:20 +0900",
+  "generated_at": "2026-04-29 12:20:37 +0900",
+  "last_successful_run": "2026-04-29 12:20:37 +0900",
   "consecutive_failures": 0,
   "stats": {
     "total_actress_pages": 50,
@@ -78,7 +78,7 @@
       "url": "https://av-actress-navi.pages.dev/actress/1057477.html",
       "hash": "34803989d4c8dc54",
       "works_count": 6,
-      "thumb_url": "https://pics.dmm.co.jp/digital/video/mird00277/mird00277pl.jpg"
+      "thumb_url": "http://pics.dmm.co.jp/mono/actjpgs/yagi_nana.jpg"
     },
     {
       "id": "1032130",
