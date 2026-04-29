@@ -38,7 +38,7 @@ from scripts.validate import (
 
 
 JST = timezone(timedelta(hours=9))
-ROOT = Path(__file__).resolve().parent.parent
+# ROOT is already defined above (SCRIPT_DIR.parent); no redefinition needed
 TMP_BUILD = ROOT / "tmp" / "build"
 LOGS_DIR = ROOT / "logs"
 MANIFEST_PATH = ROOT / "manifest.json"
@@ -330,15 +330,24 @@ def run(args: argparse.Namespace) -> int:
             if result.get("status") == "ok":
                 success_count += 1
 
-    # Anomaly detection: total actress pages drop >20% from previous run
+    # Anomaly detection: drop >20% from previous run, or <50% of configured actresses on first run
     prev_ok = sum(1 for p in prev_pages.values() if p.get("status") == "ok")
-    if prev_ok > 0 and success_count < prev_ok * 0.8 and not args.force:
-        logger.error(
-            "anomaly: actress page success count %d < 80%% of previous %d. push aborted (use --force to override)",
-            success_count,
-            prev_ok,
-        )
-        return 4
+    configured = len(actresses_cfg)
+    if not args.force:
+        if prev_ok > 0 and success_count < prev_ok * 0.8:
+            logger.error(
+                "anomaly: actress page success count %d < 80%% of previous %d. push aborted (use --force to override)",
+                success_count,
+                prev_ok,
+            )
+            return 4
+        if prev_ok == 0 and configured > 0 and success_count < configured * 0.5:
+            logger.error(
+                "anomaly: first run success count %d < 50%% of configured %d. push aborted (use --force to override)",
+                success_count,
+                configured,
+            )
+            return 4
 
     # Generate index
     index_result = generate_index_page(

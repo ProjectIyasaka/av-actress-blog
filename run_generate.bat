@@ -7,21 +7,27 @@ cd /d "%~dp0"
 
 if not exist logs mkdir logs
 
-set LOGFILE=logs\generate.log
+REM Date-stamped log file (locale-independent via Python)
+for /f %%i in ('python -c "import datetime; print(datetime.date.today().strftime('%%Y-%%m-%%d'))"') do set LOGDATE=%%i
+set LOGFILE=logs\generate_%LOGDATE%.log
 
-echo ===== %date% %time% START ===== >> %LOGFILE%
+REM Rotate: delete log files older than 7 days
+forfiles /p logs /m "generate_*.log" /d -7 /c "cmd /c del @path" 2>nul
 
 REM Activate venv if present
 if exist .venv\Scripts\activate.bat (
   call .venv\Scripts\activate.bat
 )
 
+echo ===== %date% %time% START ===== >> %LOGFILE%
+
 python scripts\generate.py %* >> %LOGFILE% 2>&1
 set GEN_EXIT=%errorlevel%
 
 if %GEN_EXIT% neq 0 (
   echo generate.py failed with exit code %GEN_EXIT% >> %LOGFILE%
-  call :notify_failure %GEN_EXIT%
+  python scripts\notify.py "av-actress-blog generate FAILED (exit %GEN_EXIT%)" >> %LOGFILE% 2>&1
+  echo ===== %date% %time% END (FAILED) ===== >> %LOGFILE%
   exit /b %GEN_EXIT%
 )
 
@@ -42,15 +48,10 @@ set PUSH_EXIT=%errorlevel%
 
 if %PUSH_EXIT% neq 0 (
   echo git push failed with exit code %PUSH_EXIT% >> %LOGFILE%
-  call :notify_failure %PUSH_EXIT%
+  python scripts\notify.py "av-actress-blog git push FAILED (exit %PUSH_EXIT%)" >> %LOGFILE% 2>&1
+  echo ===== %date% %time% END (PUSH FAILED) ===== >> %LOGFILE%
   exit /b %PUSH_EXIT%
 )
 
 echo ===== %date% %time% END (success) ===== >> %LOGFILE%
-exit /b 0
-
-:notify_failure
-if defined DISCORD_WEBHOOK_URL (
-  curl -s -H "Content-Type: application/json" -d "{\"content\":\"av-actress-blog generate FAILED (exit %1)\"}" "%DISCORD_WEBHOOK_URL%" >> %LOGFILE% 2>&1
-)
 exit /b 0
