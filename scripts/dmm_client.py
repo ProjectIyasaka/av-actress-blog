@@ -40,6 +40,13 @@ class ItemDTO:
 
 
 @dataclass
+class GenreDTO:
+    genre_id: str
+    name: str
+    ruby: Optional[str] = None
+
+
+@dataclass
 class ActressDTO:
     actress_id: str
     name: str
@@ -196,6 +203,20 @@ class DMMClient:
         data = self._request("ActressSearch", params)
         actresses_raw = data.get("result", {}).get("actress", []) or []
         return [self._normalize_actress(raw) for raw in actresses_raw]
+
+    def search_genres(self, floor: str = "videoa", hits: int = 100, offset: int = 1) -> list[GenreDTO]:
+        params: dict[str, Any] = {
+            "floor": floor,
+            "hits": hits,
+            "offset": offset,
+        }
+        data = self._request("GenreSearch", params)
+        genres_raw = data.get("result", {}).get("genre", []) or []
+        return [
+            GenreDTO(genre_id=str(g["id"]), name=g.get("name", ""), ruby=g.get("ruby"))
+            for g in genres_raw
+            if g.get("id") and g.get("name")
+        ]
 
     def get_actress_by_id(self, actress_id: str) -> Optional[ActressDTO]:
         results = self.search_actresses(actress_id=actress_id, hits=1)

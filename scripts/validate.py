@@ -46,6 +46,22 @@ def validate_ranking_page(html: str, expected_min_items: int = 5) -> ValidationR
     return ValidationResult(ok=not errors, errors=errors)
 
 
+def validate_genre_page(html: str, expected_min_items: int = 3) -> ValidationResult:
+    errors: list[str] = []
+    if not TITLE_RE.search(html):
+        errors.append("missing <title>")
+    if not CANONICAL_RE.search(html):
+        errors.append("missing <link rel='canonical'>")
+    affiliate_links = AFFILIATE_DOMAIN_RE.findall(html)
+    if len(affiliate_links) < expected_min_items:
+        errors.append(f"only {len(affiliate_links)} affiliate links (expected >= {expected_min_items})")
+    if not IMG_RE.search(html):
+        errors.append("no <img> found")
+    if "AUTO-GENERATED" not in html:
+        errors.append("missing AUTO-GENERATED marker")
+    return ValidationResult(ok=not errors, errors=errors)
+
+
 def validate_index_page(html: str) -> ValidationResult:
     errors: list[str] = []
     if not TITLE_RE.search(html):

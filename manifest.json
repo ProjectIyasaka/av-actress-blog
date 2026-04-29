@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-04-29 11:21:43 +0900",
-  "last_successful_run": "2026-04-29 11:21:43 +0900",
+  "generated_at": "2026-04-29 11:38:01 +0900",
+  "last_successful_run": "2026-04-29 11:38:01 +0900",
   "consecutive_failures": 0,
   "stats": {
     "total_actress_pages": 50,
@@ -407,6 +407,98 @@
       "url": "https://av-actress-navi.pages.dev/actress/1084346.html",
       "hash": "2e930b9e9321d07a",
       "works_count": 6
+    }
+  ],
+  "genre_pages": [
+    {
+      "id": "4025",
+      "slug": "4025",
+      "name": "単体作品",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/genre/4025.html",
+      "hash": "0aeb7283b03bdc13",
+      "works_count": 12
+    },
+    {
+      "id": "1027",
+      "slug": "1027",
+      "name": "美少女",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/genre/1027.html",
+      "hash": "886111428949f2d4",
+      "works_count": 12
+    },
+    {
+      "id": "2001",
+      "slug": "2001",
+      "name": "巨乳",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/genre/2001.html",
+      "hash": "d138d8d08a6232cd",
+      "works_count": 12
+    },
+    {
+      "id": "5001",
+      "slug": "5001",
+      "name": "中出し",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/genre/5001.html",
+      "hash": "371981736e4c9eca",
+      "works_count": 12
+    },
+    {
+      "id": "1031",
+      "slug": "1031",
+      "name": "痴女",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/genre/1031.html",
+      "hash": "9e9b3ce899ed5f05",
+      "works_count": 12
+    },
+    {
+      "id": "5002",
+      "slug": "5002",
+      "name": "フェラ",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/genre/5002.html",
+      "hash": "f5e4f2a7bae7fd09",
+      "works_count": 12
+    },
+    {
+      "id": "2006",
+      "slug": "2006",
+      "name": "スレンダー",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/genre/2006.html",
+      "hash": "0b8a65ea1662cdf5",
+      "works_count": 12
+    },
+    {
+      "id": "4005",
+      "slug": "4005",
+      "name": "乱交",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/genre/4005.html",
+      "hash": "ddc0d878647379fe",
+      "works_count": 12
+    },
+    {
+      "id": "4030",
+      "slug": "4030",
+      "name": "淫乱・ハード系",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/genre/4030.html",
+      "hash": "63fb0e8e0d2eda90",
+      "works_count": 12
+    },
+    {
+      "id": "4106",
+      "slug": "4106",
+      "name": "騎乗位",
+      "status": "ok",
+      "url": "https://av-actress-navi.pages.dev/genre/4106.html",
+      "hash": "7b4484427c5fdcf5",
+      "works_count": 12
     }
   ],
   "ranking": {

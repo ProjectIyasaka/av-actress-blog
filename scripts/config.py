@@ -83,6 +83,29 @@ def save_actresses(entries: list[ActressEntry]) -> None:
     )
 
 
+def save_genres(entries: list[GenreEntry]) -> None:
+    path = CONFIG_DIR / "genres.yaml"
+    payload = {
+        "genres": [
+            {
+                "slug": e.slug,
+                "genre_id": e.genre_id,
+                "name": e.name,
+                **({"description": e.description} if e.description else {}),
+            }
+            for e in entries
+        ]
+    }
+    header = (
+        "# ジャンル一覧（FANZA videoa floor）\n"
+        "# genre_id は GenreSearch API で取得した DMM 公式 ID を使う。\n"
+    )
+    path.write_text(
+        header + yaml.safe_dump(payload, allow_unicode=True, sort_keys=False),
+        encoding="utf-8",
+    )
+
+
 def load_genres() -> list[GenreEntry]:
     path = CONFIG_DIR / "genres.yaml"
     if not path.exists():

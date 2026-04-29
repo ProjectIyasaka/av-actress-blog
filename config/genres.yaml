@@ -1,4 +1,43 @@
 # ジャンル一覧（FANZA videoa floor）
-# genre_id は GenreSearch API で取得した DMM 公式 ID を使う。
-# 初回は空のままでOK。Phase1 後半でジャンル別ページを追加する際に埋める。
-genres: []
+# genre_id は ItemList API のキャッシュから抽出した DMM 公式 ID を使う。
+genres:
+- slug: '4025'
+  genre_id: '4025'
+  name: 単体作品
+  description: 人気AV女優が単独で出演する作品特集
+- slug: '1027'
+  genre_id: '1027'
+  name: 美少女
+  description: 美少女系AV作品のおすすめ特集
+- slug: '2001'
+  genre_id: '2001'
+  name: 巨乳
+  description: 巨乳系人気AV作品の特集
+- slug: '5001'
+  genre_id: '5001'
+  name: 中出し
+  description: 中出し系人気AV作品の特集
+- slug: '1031'
+  genre_id: '1031'
+  name: 痴女
+  description: 痴女・主導権系AV作品の特集
+- slug: '5002'
+  genre_id: '5002'
+  name: フェラ
+  description: フェラ・口技系AV作品の特集
+- slug: '2006'
+  genre_id: '2006'
+  name: スレンダー
+  description: スレンダー美女が出演するAV作品特集
+- slug: '4005'
+  genre_id: '4005'
+  name: 乱交
+  description: 乱交系AV作品の人気ランキング特集
+- slug: '4030'
+  genre_id: '4030'
+  name: 淫乱・ハード系
+  description: 激しめ・ハード系AV作品の特集
+- slug: '4106'
+  genre_id: '4106'
+  name: 騎乗位
+  description: 騎乗位プレイのAV作品特集

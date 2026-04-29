@@ -22,16 +22,19 @@ if str(ROOT) not in sys.path:
 
 from scripts.config import (
     ActressEntry,
+    GenreEntry,
     Settings,
     load_actresses,
     load_genres,
     load_settings,
     save_actresses,
+    save_genres,
 )
-from scripts.dmm_client import ActressDTO, DMMClient, ItemDTO
+from scripts.dmm_client import ActressDTO, DMMClient, GenreDTO, ItemDTO
 from scripts.render import render
 from scripts.validate import (
     validate_actress_page,
+    validate_genre_page,
     validate_index_page,
     validate_ranking_page,
 )
@@ -44,6 +47,7 @@ LOGS_DIR = ROOT / "logs"
 MANIFEST_PATH = ROOT / "manifest.json"
 
 ACTRESS_OUT_DIR = ROOT / "actress"
+GENRE_OUT_DIR = ROOT / "genre"
 RANKING_OUT = ROOT / "ranking-top10.html"
 INDEX_OUT = ROOT / "index.html"
 SITEMAP_OUT = ROOT / "sitemap.xml"
@@ -56,7 +60,7 @@ logger = logging.getLogger("generate")
 
 
 def _ensure_dirs() -> None:
-    for d in (TMP_BUILD, TMP_BUILD / "actress", LOGS_DIR, ACTRESS_OUT_DIR):
+    for d in (TMP_BUILD, TMP_BUILD / "actress", TMP_BUILD / "genre", LOGS_DIR, ACTRESS_OUT_DIR, GENRE_OUT_DIR):
         d.mkdir(parents=True, exist_ok=True)
 
 
@@ -119,6 +123,63 @@ def _bootstrap_actresses(client: DMMClient, n: int) -> list[ActressEntry]:
     entries = [ActressEntry(id=aid, note=name) for aid, name in seen.items()]
     logger.info("bootstrap: collected %d actresses", len(entries))
     return entries
+
+
+def _bootstrap_genres(client: DMMClient, n: int) -> list[GenreEntry]:
+    """Fetch popular genres to seed genres.yaml."""
+    logger.info("bootstrap: collecting genres from GenreSearch API")
+    genres = client.search_genres(hits=min(n, 100))[:n]
+    entries = [GenreEntry(slug=g.genre_id, genre_id=g.genre_id, name=g.name) for g in genres]
+    logger.info("bootstrap: collected %d genres", len(entries))
+    return entries
+
+
+def generate_genre_page(
+    client: DMMClient,
+    entry: GenreEntry,
+    settings: Settings,
+    generated_at: str,
+    generated_date: str,
+) -> Optional[dict]:
+    """Returns manifest entry on success, None on skip."""
+    works = client.search_items(
+        article="genre",
+        article_id=entry.genre_id,
+        sort="rank",
+        hits=12,
+    )
+    if len(works) < 3:
+        logger.warning("genre %s (%s): only %d works, skip", entry.genre_id, entry.name, len(works))
+        return {"id": entry.genre_id, "name": entry.name, "status": "skipped", "reason": "insufficient_works"}
+
+    canonical_url = f"{settings.site_base_url}/genre/{entry.slug}.html"
+    context = {
+        "page": {"genre": entry, "works": works},
+        "canonical_url": canonical_url,
+        "generated_at": generated_at,
+        "generated_date": generated_date,
+    }
+    html = render("genre.html", context)
+    result = validate_genre_page(html)
+    if not result.ok:
+        logger.error("genre %s: validation failed: %s", entry.genre_id, result.errors)
+        return {"id": entry.genre_id, "name": entry.name, "status": "failed", "reason": ";".join(result.errors)}
+
+    tmp_path = TMP_BUILD / "genre" / f"{entry.slug}.html"
+    tmp_path.write_text(html, encoding="utf-8")
+    final_path = GENRE_OUT_DIR / f"{entry.slug}.html"
+    _atomic_replace(tmp_path, final_path)
+
+    page_hash = _content_hash(entry.genre_id, [asdict(w) for w in works])
+    return {
+        "id": entry.genre_id,
+        "slug": entry.slug,
+        "name": entry.name,
+        "status": "ok",
+        "url": canonical_url,
+        "hash": page_hash,
+        "works_count": len(works),
+    }
 
 
 def generate_actress_page(
@@ -283,6 +344,15 @@ def run(args: argparse.Namespace) -> int:
         logger.error("bootstrap returned 0 actresses")
         return 1
 
+    if args.bootstrap_genres:
+        genre_entries = _bootstrap_genres(client, args.bootstrap_genres)
+        if genre_entries:
+            save_genres(genre_entries)
+            logger.info("wrote %d genres to config/genres.yaml", len(genre_entries))
+            return 0
+        logger.error("bootstrap returned 0 genres")
+        return 1
+
     actresses_cfg = load_actresses()
     if args.limit_actresses:
         actresses_cfg = actresses_cfg[: args.limit_actresses]
@@ -357,13 +427,31 @@ def run(args: argparse.Namespace) -> int:
         logger.error("index generation failed")
         return 5
 
+    # Generate genre pages
+    genres_cfg = load_genres()
+    genre_results: list[dict] = []
+    genre_success_count = 0
+    for genre_entry in genres_cfg:
+        g_result = generate_genre_page(client, genre_entry, settings, generated_at, generated_date)
+        if g_result:
+            genre_results.append(g_result)
+            if g_result.get("status") == "ok":
+                genre_success_count += 1
+    if genre_success_count:
+        logger.info("GENRE: %d genre pages generated", genre_success_count)
+
     # Sitemap
     actress_urls = [
         (r["url"], today_iso)
         for r in actress_results
         if r.get("status") == "ok" and r.get("url")
     ]
-    generate_sitemap(settings, actress_urls, today_iso)
+    genre_urls = [
+        (r["url"], today_iso)
+        for r in genre_results
+        if r.get("status") == "ok" and r.get("url")
+    ]
+    generate_sitemap(settings, actress_urls + genre_urls, today_iso)
 
     # Manifest
     manifest = {
@@ -376,6 +464,7 @@ def run(args: argparse.Namespace) -> int:
             "ranking_items": ranking_result.get("items_count", 0),
         },
         "actress_pages": actress_results,
+        "genre_pages": genre_results,
         "ranking": ranking_result,
         "index": index_result,
         "generator_version": "0.1.0",
@@ -404,6 +493,12 @@ def main() -> int:
         type=int,
         metavar="N",
         help="Process only first N actresses from config (for testing)",
+    )
+    parser.add_argument(
+        "--bootstrap-genres",
+        type=int,
+        metavar="N",
+        help="Discover N genres from API and write to config/genres.yaml",
     )
     parser.add_argument(
         "--force",
