@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% set genre = page.genre %}
 {% set works = page.works %}
-{% block title %}{{ genre.name }}のおすすめAV・人気作品{{ works|length }}選 | AV女優ナビ{% endblock %}
-{% block description %}FANZAの人気ジャンル「{{ genre.name }}」のおすすめ作品{{ works|length }}本を厳選紹介。無料サンプル動画あり。{% endblock %}
+{% block title %}{{ genre.name }}のおすすめAV・無料動画【{{ generated_at[:4] }}年最新ランキング】| AV女優ナビ{% endblock %}
+{% block description %}FANZAの人気ジャンル「{{ genre.name }}」のランキング上位{{ works|length }}作品を厳選紹介。無料サンプル動画あり。「{{ works[0].title if works else '' }}」など話題作をチェック。{% endblock %}
 {% block og_type %}article{% endblock %}
 {% block og_image %}{% if works and works[0].image_large %}{{ works[0].image_large }}{% endif %}{% endblock %}
 
@@ -19,6 +19,15 @@
       "publisher": {"@type": "Organization", "name": "AV女優ナビ", "url": "{{ site_base_url }}"},
       "url": "{{ canonical_url }}"{% if works and works[0].image_large %},
       "image": "{{ works[0].image_large }}"{% endif %}
+    },
+    {
+      "@type": "ItemList",
+      "name": "{{ genre.name }}おすすめ作品",
+      "numberOfItems": {{ works|length }},
+      "itemListElement": [
+        {% for work in works[:5] %}{"@type": "ListItem", "position": {{ loop.index }}, "name": "{{ work.title }}", "url": "{{ work.affiliate_url }}"}{% if not loop.last %},{% endif %}
+        {% endfor %}
+      ]
     },
     {
       "@type": "BreadcrumbList",
@@ -82,6 +91,7 @@
             <div class="work-card-body">
               <p class="work-title">{{ work.title }}</p>
               {% if work.price %}<p class="work-price">¥{{ work.price }}</p>{% endif %}
+              {% if work.release_date %}<p class="work-date">{{ work.release_date[:10] }}</p>{% endif %}
               <a href="{{ work.affiliate_url }}" class="btn-work" target="_blank" rel="noopener sponsored">FANZAで観る</a>
             </div>
           </div>
@@ -115,10 +125,12 @@
     </div>
 
     <div class="sidebar-widget">
-      <div class="widget-title">ランキング</div>
+      <div class="widget-title">人気記事</div>
       <div class="widget-body">
-        <ul class="related-list">
-          <li><a href="/ranking-top10.html">📊 おすすめAV女優TOP10【最新版】</a></li>
+        <ul class="related-list popular-list">
+          {% for link in page.popular_links %}
+          <li><span class="rank rank-{{ loop.index }}">{{ loop.index }}</span><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {% endfor %}
         </ul>
       </div>
     </div>
