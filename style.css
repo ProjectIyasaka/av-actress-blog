@@ -547,6 +547,11 @@ img { max-width: 100%; height: auto; }
   font-weight: 700;
   margin-bottom: 8px;
 }
+.work-card-body .work-date {
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
 .btn-work {
   display: flex;
   align-items: center;

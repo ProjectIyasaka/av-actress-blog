@@ -291,7 +291,7 @@ def generate_actress_page(
         article="actress",
         article_id=entry.id,
         sort="-date",
-        hits=12,
+        hits=20,
     )
     if len(works) < 3:
         logger.warning(

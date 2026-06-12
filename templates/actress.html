@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% set actress = page.actress %}
 {% set works = page.works %}
-{% block title %}{{ actress.name }}のプロフィール・出演作品{{ works|length }}選 | AV女優ナビ{% endblock %}
-{% block description %}{{ actress.name }}（{{ actress.ruby or '' }}）のプロフィールと出演作品を紹介。{% if actress.height %}身長{{ actress.height }}cm{% endif %}{% if actress.cup %} {{ actress.cup }}カップ{% endif %}{% if works %}。代表作「{{ works[0].title }}」など{{ works|length }}作品掲載。{% endif %}{% endblock %}
+{% block title %}{{ actress.name }}{% if actress.ruby %}（{{ actress.ruby }}）{% endif %}の無料サンプル動画・出演作品【{{ generated_at[:4] }}年最新】| AV女優ナビ{% endblock %}
+{% block description %}{{ actress.name }}の出演作品{{ works|length }}本と無料サンプル動画をまとめて紹介。{% if actress.height %}身長{{ actress.height }}cm{% endif %}{% if actress.cup %}・{{ actress.cup }}カップ{% endif %}。{% if works %}「{{ works[0].title }}」など人気作品をFANZAで確認できます。{% endif %}{% endblock %}
 {% block og_type %}article{% endblock %}
 {% block og_image %}{% if actress.image_large %}{{ actress.image_large }}{% endif %}{% endblock %}
 
@@ -19,6 +19,15 @@
       "publisher": {"@type": "Organization", "name": "AV女優ナビ", "url": "{{ site_base_url }}"},
       "url": "{{ canonical_url }}"{% if actress.image_large %},
       "image": "{{ actress.image_large }}"{% endif %}
+    },
+    {
+      "@type": "Person",
+      "name": "{{ actress.name }}"{% if actress.ruby %},
+      "alternateName": "{{ actress.ruby }}"{% endif %}{% if actress.birthday %},
+      "birthDate": "{{ actress.birthday }}"{% endif %}{% if actress.height %},
+      "height": {"@type": "QuantitativeValue", "value": {{ actress.height }}, "unitCode": "CMT"}{% endif %}{% if actress.image_large %},
+      "image": "{{ actress.image_large }}"{% endif %},
+      "url": "{{ canonical_url }}"
     },
     {
       "@type": "BreadcrumbList",
@@ -123,6 +132,7 @@
                 {% endfor %}
               </div>
               {% endif %}
+              {% if work.release_date %}<p class="work-date">{{ work.release_date[:10] }}</p>{% endif %}
               <a href="{{ work.affiliate_url }}" class="btn-work" target="_blank" rel="noopener sponsored">FANZAで観る</a>
             </div>
           </div>

@@ -1,3 +1,14 @@
+---
+source: project/av-actress-blog/README.md
+migrated_at: 2026-05-16
+---
+
+<!-- ============================================
+     このファイルは Vault からの自動ミラーです。
+     編集は vault\01_Project\av-actress-blog\README.md で行ってください。
+     ここを直接編集しても次回同期で上書きされます。
+     最終同期: 2026-05-22 03:15:02
+============================================ -->
 # av-actress-blog
 
 FANZA Affiliate API を使った静的HTMLサイトの自動生成システム。
