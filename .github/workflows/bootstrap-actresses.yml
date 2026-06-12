@@ -1,0 +1,45 @@
+name: Bootstrap Actresses
+
+on:
+  workflow_dispatch:
+    inputs:
+      count:
+        description: "取得する女優数"
+        required: true
+        default: "500"
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Bootstrap actresses
+        env:
+          DMM_API_ID: ${{ secrets.DMM_API_ID }}
+          DMM_AFFILIATE_ID: ${{ secrets.DMM_AFFILIATE_ID }}
+          SITE_BASE_URL: https://fanza-actress.com
+        run: python -m scripts.generate --bootstrap-actresses ${{ github.event.inputs.count }}
+
+      - name: Commit updated actresses.yaml
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add config/actresses.yaml
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: bootstrap actresses (${{ github.event.inputs.count }}名)"
+            git push
+          fi
