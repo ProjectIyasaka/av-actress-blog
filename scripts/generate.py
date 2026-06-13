@@ -20,6 +20,7 @@ ROOT = SCRIPT_DIR.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from scripts.ai_content import get_ai_bio
 from scripts.config import (
     ActressEntry,
     GenreEntry,
@@ -100,17 +101,16 @@ def _load_prev_manifest() -> dict:
     return {}
 
 
-def _bootstrap_actresses(client: DMMClient, n: int) -> list[ActressEntry]:
+def _bootstrap_actresses(client: DMMClient, n: int, genre_id: Optional[str] = None) -> list[ActressEntry]:
     """Fetch popular actresses to seed actresses.yaml.
 
     Heuristic: fetch top-ranking video items and collect actress IDs from iteminfo.actress.
+    If genre_id is given, restrict to items in that genre.
     """
-    logger.info("bootstrap: collecting actresses from top-ranked items")
+    logger.info("bootstrap: collecting actresses from top-ranked items%s", f" (genre={genre_id})" if genre_id else "")
     seen: dict[str, str] = {}
     offset = 1
     while len(seen) < n and offset <= 500:
-        # we cannot directly query items with iteminfo from the DTO since we strip it.
-        # Use raw cache by re-requesting.
         params: dict[str, Any] = {
             "site": "FANZA",
             "service": "digital",
@@ -119,6 +119,9 @@ def _bootstrap_actresses(client: DMMClient, n: int) -> list[ActressEntry]:
             "hits": 100,
             "offset": offset,
         }
+        if genre_id:
+            params["article"] = "genre"
+            params["article_id"] = genre_id
         items = client.fetch_raw_item_page(params)
         if not items:
             break
@@ -299,11 +302,14 @@ def generate_actress_page(
         )
         return {"id": entry.id, "status": "skipped", "reason": "insufficient_works"}
 
+    ai_bio = get_ai_bio(actress, site_type=settings.site_type)
+
     canonical_url = f"{settings.site_base_url}/actress/{entry.id}.html"
     context = {
         "page": {
             "actress": actress,
             "works": works,
+            "ai_bio": ai_bio,
             "related_actresses": [a for a in related_actresses if a.actress_id != entry.id][:5],
             "genre_slug_map": genre_slug_map or {},
             "popular_links": popular_links or [],
@@ -605,7 +611,7 @@ def run(args: argparse.Namespace) -> int:
     client = DMMClient(api_id=settings.api_id, affiliate_id=settings.affiliate_id)
 
     if args.bootstrap_actresses:
-        entries = _bootstrap_actresses(client, args.bootstrap_actresses)
+        entries = _bootstrap_actresses(client, args.bootstrap_actresses, genre_id=args.bootstrap_genre)
         if entries:
             save_actresses(entries)
             logger.info("wrote %d actresses to config/actresses.yaml", len(entries))
@@ -900,6 +906,12 @@ def main() -> int:
         type=int,
         metavar="N",
         help="Discover N genres from API and write to config/genres.yaml",
+    )
+    parser.add_argument(
+        "--bootstrap-genre",
+        type=str,
+        metavar="GENRE_ID",
+        help="Filter --bootstrap-actresses to items in this FANZA genre ID",
     )
     parser.add_argument(
         "--force",

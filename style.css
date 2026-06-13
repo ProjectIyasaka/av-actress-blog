@@ -934,6 +934,17 @@ a.work-tag:hover { border-color: var(--pink); color: var(--pink); }
 }
 
 /* ======= Reduced Motion ======= */
+.ai-intro {
+  background: linear-gradient(135deg, rgba(233,30,140,.08) 0%, rgba(255,215,0,.05) 100%);
+  border-left: 3px solid var(--pink);
+  border-radius: 6px;
+  padding: 14px 18px;
+  margin: 16px 0;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

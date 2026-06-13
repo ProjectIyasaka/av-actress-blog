@@ -35,6 +35,19 @@ class Settings:
     affiliate_id: str
     site_base_url: str
     discord_webhook_url: Optional[str]
+    site_name: str = "AV女優ナビ"
+    site_type: str = "general"
+    niche_genre_id: Optional[str] = None
+
+
+def _load_site_config() -> dict:
+    path = CONFIG_DIR / "site.yaml"
+    if not path.exists():
+        return {}
+    try:
+        return yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    except Exception:
+        return {}
 
 
 def load_settings() -> Settings:
@@ -48,11 +61,15 @@ def load_settings() -> Settings:
         raise RuntimeError(
             "DMM_API_ID and DMM_AFFILIATE_ID must be set in .env or environment"
         )
+    site_cfg = _load_site_config()
     return Settings(
         api_id=api_id,
         affiliate_id=affiliate_id,
         site_base_url=site_base_url,
         discord_webhook_url=discord,
+        site_name=site_cfg.get("site_name", "AV女優ナビ"),
+        site_type=site_cfg.get("site_type", "general"),
+        niche_genre_id=site_cfg.get("niche_genre_id") or None,
     )
 
 

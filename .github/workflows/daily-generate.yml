@@ -38,6 +38,7 @@ jobs:
           DMM_API_ID: ${{ secrets.DMM_API_ID }}
           DMM_AFFILIATE_ID: ${{ secrets.DMM_AFFILIATE_ID }}
           SITE_BASE_URL: https://fanza-actress.com
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: python -m scripts.generate
 
       - name: Commit and push

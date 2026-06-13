@@ -91,6 +91,12 @@
           <p>{{ actress.name }}{% if actress.ruby %}（{{ actress.ruby }}）{% endif %}は{% if actress.prefectures %}{{ actress.prefectures }}出身の{% endif %}人気AV女優。{% if works %}最新作「{{ works[0].title }}」を含む{{ works|length }}作品をピックアップ。{% endif %}FANZAで無料サンプル動画とともに楽しめます。</p>
         </div>
 
+        {% if page.ai_bio %}
+        <div class="ai-intro">
+          <p>{{ page.ai_bio }}</p>
+        </div>
+        {% endif %}
+
         {% if actress.list_url or (works and works[0].affiliate_url) %}
         <div class="cta-box cta-box--top">
           <a href="{{ actress.list_url or works[0].affiliate_url }}" class="btn-cta large" target="_blank" rel="noopener sponsored">
