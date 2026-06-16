@@ -115,7 +115,9 @@
     if (e.target.closest('a, button')) return;
     var link = card.querySelector('.btn-work');
     if (!link) return;
-    window.open(link.href, '_blank', 'noopener,noreferrer');
+    // Trigger the real anchor so the browser treats it as a normal link navigation
+    // (window.open with a features string is often caught by popup blockers).
+    link.click();
   });
 </script>
 
