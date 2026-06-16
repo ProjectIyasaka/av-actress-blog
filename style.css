@@ -516,7 +516,7 @@ img { max-width: 100%; height: auto; }
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
-  cursor: pointer;
+  position: relative;
   transition: transform .2s, box-shadow .2s, border-color .2s;
 }
 .work-card:hover {
@@ -568,6 +568,7 @@ img { max-width: 100%; height: auto; }
 }
 .btn-work:hover { background: var(--pink-d); opacity: 1; color: var(--white); }
 .btn-work:focus-visible { outline: 2px solid var(--white); outline-offset: 2px; }
+.btn-work::after { content: ''; position: absolute; inset: 0; }
 
 /* ======= Ranking List ======= */
 .ranking-list { list-style: none; padding: 0; counter-reset: ranking; }
@@ -856,6 +857,8 @@ img { max-width: 100%; height: auto; }
   color: var(--muted);
   text-decoration: none;
   white-space: nowrap;
+  position: relative;
+  z-index: 1;
 }
 a.work-tag:hover { border-color: var(--pink); color: var(--pink); }
 
