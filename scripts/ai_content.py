@@ -27,20 +27,21 @@ _PROMPTS = {
 
 
 def get_ai_bio(actress: "ActressDTO", site_type: str = "general") -> Optional[str]:
-    api_key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
-    if not api_key:
-        return None
-
     site_type = site_type if site_type in _PROMPTS else "general"
     cache_dir = AI_CACHE_DIR / site_type
     cache_dir.mkdir(parents=True, exist_ok=True)
     cache_path = cache_dir / f"{actress.actress_id}.json"
 
+    # キャッシュ済みなら API キー不要で返す（CI にキーを置かない運用を許容）
     if cache_path.exists():
         try:
             return json.loads(cache_path.read_text(encoding="utf-8"))["bio"]
         except Exception:
             pass
+
+    api_key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
+    if not api_key:
+        return None
 
     profile_parts = []
     if actress.height:
