@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-31 13:25:15 +0900",
-  "last_successful_run": "2026-07-31 13:25:15 +0900",
+  "generated_at": "2026-08-01 13:23:07 +0900",
+  "last_successful_run": "2026-08-01 13:23:07 +0900",
   "consecutive_failures": 0,
   "stats": {
     "total_actress_pages": 527,
@@ -5141,6 +5141,23 @@
   ],
   "monthly_ranking_pages": [
     {
+      "slug": "2026-08",
+      "status": "ok",
+      "url": "https://fanza-actress.com/ranking/monthly/2026-08.html",
+      "hash": "f1ef5daf68a63638",
+      "items_count": 10,
+      "thumb_url": "https://pics.dmm.co.jp/digital/video/savr01143/savr01143pl.jpg",
+      "thumb_candidates": [
+        "https://pics.dmm.co.jp/digital/video/savr01143/savr01143pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/savr01129/savr01129pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/vrprd00200/vrprd00200pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/savr01125/savr01125pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/snos00334/snos00334pl.jpg"
+      ],
+      "year": 2026,
+      "month": "08"
+    },
+    {
       "slug": "2026-07",
       "status": "ok",
       "url": "https://fanza-actress.com/ranking/monthly/2026-07.html",
@@ -5173,23 +5190,6 @@
       ],
       "year": 2026,
       "month": "06"
-    },
-    {
-      "slug": "2026-05",
-      "status": "ok",
-      "url": "https://fanza-actress.com/ranking/monthly/2026-05.html",
-      "hash": "fa10facfee0962c5",
-      "items_count": 10,
-      "thumb_url": "https://pics.dmm.co.jp/digital/video/snos00149/snos00149pl.jpg",
-      "thumb_candidates": [
-        "https://pics.dmm.co.jp/digital/video/snos00149/snos00149pl.jpg",
-        "https://pics.dmm.co.jp/digital/video/dvmm00393/dvmm00393pl.jpg",
-        "https://pics.dmm.co.jp/digital/video/mdhr00002/mdhr00002pl.jpg",
-        "https://pics.dmm.co.jp/digital/video/cawd00949/cawd00949pl.jpg",
-        "https://pics.dmm.co.jp/digital/video/mngs00051/mngs00051pl.jpg"
-      ],
-      "year": 2026,
-      "month": "05"
     }
   ],
   "ranking": {
