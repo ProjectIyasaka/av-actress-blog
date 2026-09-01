@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-31 15:49:26 +0900",
-  "last_successful_run": "2026-08-31 15:49:26 +0900",
+  "generated_at": "2026-09-01 15:08:35 +0900",
+  "last_successful_run": "2026-09-01 15:08:35 +0900",
   "consecutive_failures": 0,
   "stats": {
     "total_actress_pages": 526,
@@ -5142,6 +5142,23 @@
   ],
   "monthly_ranking_pages": [
     {
+      "slug": "2026-09",
+      "status": "ok",
+      "url": "https://fanza-actress.com/ranking/monthly/2026-09.html",
+      "hash": "c18cc79106353c13",
+      "items_count": 10,
+      "thumb_url": "https://pics.dmm.co.jp/digital/video/1start00602/1start00602pl.jpg",
+      "thumb_candidates": [
+        "https://pics.dmm.co.jp/digital/video/1start00602/1start00602pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/1start00635/1start00635pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/snos00299/snos00299pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/snos00377/snos00377pl.jpg",
+        "https://pics.dmm.co.jp/digital/video/1start00625/1start00625pl.jpg"
+      ],
+      "year": 2026,
+      "month": "09"
+    },
+    {
       "slug": "2026-08",
       "status": "ok",
       "url": "https://fanza-actress.com/ranking/monthly/2026-08.html",
@@ -5174,23 +5191,6 @@
       ],
       "year": 2026,
       "month": "07"
-    },
-    {
-      "slug": "2026-06",
-      "status": "ok",
-      "url": "https://fanza-actress.com/ranking/monthly/2026-06.html",
-      "hash": "bb74e8df3b395795",
-      "items_count": 10,
-      "thumb_url": "https://pics.dmm.co.jp/digital/video/pred00867/pred00867pl.jpg",
-      "thumb_candidates": [
-        "https://pics.dmm.co.jp/digital/video/pred00867/pred00867pl.jpg",
-        "https://pics.dmm.co.jp/digital/video/prwf00012/prwf00012pl.jpg",
-        "https://pics.dmm.co.jp/digital/video/mird00285/mird00285pl.jpg",
-        "https://pics.dmm.co.jp/digital/video/mida00662/mida00662pl.jpg",
-        "https://pics.dmm.co.jp/digital/video/mvg00166/mvg00166pl.jpg"
-      ],
-      "year": 2026,
-      "month": "06"
     }
   ],
   "ranking": {
